@@ -1,0 +1,9 @@
+{
+  "name": "freelancer-prospect-scripts",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Local tooling for this repo (currently: HTML-to-PDF rendering for commercial documents).",
+  "dependencies": {
+    "puppeteer-core": "^25.11.0"
+  }
+}
