@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<title>Audit commercial — Brandon Service Location</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4; margin: 0; }
+  :root {
+    --ink: #14181c;
+    --ink-soft: #40484f;
+    --paper: #eceee9;
+    --paper-raised: #ffffff;
+    --line: rgba(20,24,28,0.16);
+    --amber: #d98a1f;
+    --amber-deep: #a8650f;
+    --amber-tint: #fbeed9;
+  }
+  * { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
+    color: var(--ink);
+    background: #d8dad5;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 { font-family: "Archivo", system-ui, sans-serif; font-weight: 900; margin: 0; letter-spacing: -0.01em; text-wrap: balance; }
+  p { margin: 0; }
+  .mono { font-family: "IBM Plex Mono", ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    position: relative;
+    padding: 16mm 16mm 20mm 16mm;
+    background: var(--paper);
+    page-break-after: always;
+    break-after: page;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+  }
+  .page:last-of-type { page-break-after: auto; break-after: auto; }
+
+  .page-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 9mm; flex-shrink: 0; }
+  .brand { display: flex; align-items: center; gap: 8px; font-family: "Archivo", sans-serif; font-weight: 900; font-size: 12.5px; letter-spacing: -0.01em; }
+  .brand-mark { width: 20px; height: 20px; border-radius: 6px; background: linear-gradient(155deg, var(--amber), var(--amber-deep)); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .brand-mark svg { width: 12px; height: 12px; }
+  .doc-label { font-size: 9px; color: var(--ink-soft); letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; }
+
+  .page-footer {
+    margin-top: auto; padding-top: 8px; border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-size: 8px; color: var(--ink-soft); flex-shrink: 0;
+  }
+
+  .content { flex: 1; display: flex; flex-direction: column; }
+
+  .eyebrow { font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--amber-deep); margin-bottom: 6px; }
+  .section-title { font-size: 20px; margin-bottom: 3mm; }
+  .section-block { margin-bottom: 8mm; }
+  .section-block:last-child { margin-bottom: 0; }
+  .lede { color: var(--ink-soft); font-size: 11px; line-height: 1.6; max-width: 62ch; }
+
+  /* ---- Cover (page 1) ---- */
+  .cover-content { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+  .cover-kicker { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--amber-deep); margin-bottom: 10px; }
+  .cover-title { font-size: 34px; line-height: 1.05; margin-bottom: 4px; }
+  .cover-sub { font-family: "Archivo", sans-serif; font-weight: 700; font-size: 13px; color: var(--ink-soft); margin-bottom: 10mm; }
+  .cover-summary { font-size: 12.5px; line-height: 1.7; max-width: 60ch; color: var(--ink); }
+  .cover-summary strong { font-weight: 700; }
+  .cover-stats { display: flex; gap: 22px; margin-top: 12mm; padding-top: 8mm; border-top: 1px solid var(--line); }
+  .cover-stat b { display: block; font-family: "Archivo", sans-serif; font-size: 20px; font-weight: 900; }
+  .cover-stat span { font-size: 9.5px; color: var(--ink-soft); }
+  .cover-for { margin-top: auto; padding-top: 10mm; font-size: 10px; color: var(--ink-soft); }
+  .cover-for b { color: var(--ink); font-weight: 700; }
+
+  /* ---- generic cards ---- */
+  .card { background: var(--paper-raised); border: 1px solid var(--line); border-radius: 8px; padding: 6mm; }
+  .card-row { display: grid; grid-template-columns: 30px 1fr; gap: 4mm; padding-block: 4mm; border-top: 1px solid var(--line); }
+  .card-row:first-child { border-top: none; padding-top: 0; }
+  .card-row .icon { width: 30px; height: 30px; border-radius: 7px; background: var(--amber-tint); display: flex; align-items: center; justify-content: center; }
+  .card-row .icon svg { width: 15px; height: 15px; color: var(--amber-deep); }
+  .card-row h3 { font-size: 12px; margin-bottom: 2px; }
+  .card-row p { font-size: 10.5px; color: var(--ink-soft); line-height: 1.55; }
+
+  .opp-card { background: var(--paper-raised); border: 1px solid var(--line); border-radius: 8px; padding: 7mm; margin-bottom: 6mm; }
+  .opp-card:last-child { margin-bottom: 0; }
+  .opp-card .opp-num { font-family: "IBM Plex Mono", monospace; color: var(--amber-deep); font-weight: 600; font-size: 10px; }
+  .opp-card h3 { font-size: 14px; margin-top: 3px; margin-bottom: 3mm; }
+  .opp-card p { font-size: 11px; line-height: 1.6; color: var(--ink-soft); }
+
+  .impact-list { display: flex; flex-direction: column; gap: 4mm; }
+  .impact-item { display: flex; gap: 3mm; align-items: flex-start; }
+  .impact-item .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--amber); margin-top: 6px; flex-shrink: 0; }
+  .impact-item p { font-size: 11px; line-height: 1.6; color: var(--ink); }
+
+  .deliverable-box { background: var(--ink); color: #f5f6f4; border-radius: 8px; padding: 7mm; }
+  .deliverable-box h3 { color: #fff; font-size: 13px; margin-bottom: 4mm; }
+  .deliverable-row { display: flex; gap: 3mm; align-items: flex-start; padding-block: 3mm; border-top: 1px solid rgba(255,255,255,0.14); }
+  .deliverable-row:first-of-type { border-top: none; padding-top: 0; }
+  .deliverable-row .n { font-family: "IBM Plex Mono", monospace; color: var(--amber); font-size: 10px; flex-shrink: 0; width: 14px; }
+  .deliverable-row div p { font-size: 10.5px; color: rgba(245,246,244,0.7); line-height: 1.55; margin-top: 1px; }
+  .deliverable-row div b { font-size: 11.5px; }
+
+  /* ---- example page ---- */
+  .example-frame { background: var(--paper-raised); border: 1px solid var(--line); border-radius: 8px; padding: 4mm; max-height: 215mm; overflow: hidden; }
+  .example-desktop { max-height: 105mm; overflow: hidden; border-radius: 4px; border: 1px solid var(--line); }
+  .example-desktop img { width: 100%; display: block; }
+  .example-row { display: flex; justify-content: center; margin-top: 4mm; }
+  .example-mobile { width: 34mm; max-height: 74mm; overflow: hidden; border-radius: 10px; border: 1px solid var(--line); }
+  .example-mobile img { width: 100%; display: block; }
+  .example-caption { font-size: 9.5px; color: var(--ink-soft); margin-top: 4mm; text-align: center; }
+  .example-caption .mono { font-size: 9px; }
+
+  /* ---- priorisation ---- */
+  .priority-row { display: flex; gap: 4mm; align-items: flex-start; padding-block: 5mm; border-top: 1px solid var(--line); }
+  .priority-row:first-of-type { border-top: none; padding-top: 0; }
+  .priority-tag { font-family: "IBM Plex Mono", monospace; font-size: 9px; font-weight: 600; padding: 3px 9px; border-radius: 999px; flex-shrink: 0; white-space: nowrap; }
+  .priority-tag.p1 { background: var(--amber-tint); color: var(--amber-deep); }
+  .priority-tag.p2 { background: rgba(20,24,28,0.08); color: var(--ink-soft); }
+  .priority-row p { font-size: 11px; line-height: 1.6; color: var(--ink-soft); }
+  .priority-row p b { color: var(--ink); }
+
+  .cta-box { background: linear-gradient(155deg, var(--amber), var(--amber-deep)); border-radius: 10px; padding: 9mm; margin-top: auto; }
+  .cta-box h3 { font-size: 17px; color: #241a08; margin-bottom: 3mm; }
+  .cta-box p { font-size: 11.5px; color: #3a2708; line-height: 1.55; max-width: 50ch; }
+  .cta-contacts { display: flex; gap: 10mm; margin-top: 6mm; flex-wrap: wrap; }
+  .cta-contact .lbl { font-size: 8.5px; text-transform: uppercase; letter-spacing: 0.06em; color: #3a2708; opacity: 0.75; }
+  .cta-contact .val { font-family: "IBM Plex Mono", monospace; font-size: 12px; font-weight: 600; color: #241a08; margin-top: 2px; }
+</style>
+</head>
+<body>
+
+<!-- ============ PAGE 1 — COVER / EXECUTIVE SUMMARY ============ -->
+<div class="page">
+  <div class="page-header">
+    <div class="brand">
+      <span class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#241a08" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13l1.5-5A2 2 0 0 1 6.4 6.5h11.2A2 2 0 0 1 19.5 8l1.5 5"/><path d="M2 13h20v4a1 1 0 0 1-1 1h-1.5a1 1 0 0 1-1-1v-1h-13v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"/><circle cx="7" cy="17.5" r="1.6"/><circle cx="17" cy="17.5" r="1.6"/></svg>
+      </span>
+      Brandon Service Location
+    </div>
+    <div class="doc-label">Audit commercial</div>
+  </div>
+
+  <div class="cover-content">
+    <div class="cover-kicker">Audit commercial — Septembre 2026</div>
+    <h1 class="cover-title">Brandon Service Location</h1>
+    <div class="cover-sub">Location de véhicules avec chauffeur — Brazzaville</div>
+    <p class="cover-summary">
+      Brandon Service Location s'appuie sur une offre déjà claire, répartie en trois formules, et sur une activité en développement : plusieurs chauffeurs sont recrutés en ce moment. <strong>L'opportunité identifiée</strong> est de donner à cette offre une vitrine en ligne et un contact professionnel, pour capter aussi les demandes qui commencent par une recherche sur le web plutôt que par un appel direct. <strong>La proposition</strong> : un site vitrine d'une page et une adresse email professionnelle, conçus et livrés ensemble.
+    </p>
+    <div class="cover-stats">
+      <div class="cover-stat"><b>2022</b><span>Actif depuis</span></div>
+      <div class="cover-stat"><b>3</b><span>Formules : location, vente, contrat</span></div>
+      <div class="cover-stat"><b class="mono">+</b><span>Chauffeurs en recrutement actif</span></div>
+    </div>
+  </div>
+
+  <div class="cover-for">Préparé à l'attention de <b>Evy Meidroy Emanuel Sathoud</b>, PDG de Brandon Service Location.</div>
+
+  <div class="page-footer">
+    <span>Document préparé par Emmanuel Kongo — proposition commerciale, non contractuelle.</span>
+    <span class="mono">1 / 6</span>
+  </div>
+</div>
+
+<!-- ============ PAGE 2 — SITUATION ACTUELLE + POINTS POSITIFS ============ -->
+<div class="page">
+  <div class="page-header">
+    <div class="brand">
+      <span class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#241a08" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13l1.5-5A2 2 0 0 1 6.4 6.5h11.2A2 2 0 0 1 19.5 8l1.5 5"/><path d="M2 13h20v4a1 1 0 0 1-1 1h-1.5a1 1 0 0 1-1-1v-1h-13v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"/><circle cx="7" cy="17.5" r="1.6"/><circle cx="17" cy="17.5" r="1.6"/></svg>
+      </span>
+      Brandon Service Location
+    </div>
+    <div class="doc-label">Audit commercial</div>
+  </div>
+
+  <div class="content">
+    <div class="section-block">
+      <div class="eyebrow">Situation actuelle</div>
+      <h2 class="section-title">Une activité active, portée par un canal direct</h2>
+      <p class="lede" style="margin-top:4mm; max-width:none;">
+        Brandon Service Location opère à Brazzaville depuis 2022, autour de trois activités : la location de véhicules avec chauffeur, la vente de véhicules, et la mise à disposition de véhicules par contrat pour les entreprises. Aujourd'hui, les demandes de réservation, d'achat et de contrat passent par téléphone et par WhatsApp, un canal direct et personnel qui a fait ses preuves. Cette organisation ouvre naturellement la porte à une prochaine étape : une vitrine en ligne qui centralise et complète ce canal, sans le remplacer.
+      </p>
+    </div>
+
+    <div class="section-block">
+      <div class="eyebrow">Points positifs</div>
+      <h2 class="section-title">Ce qui joue déjà en faveur de Brandon</h2>
+      <div class="card" style="margin-top:5mm;">
+        <div class="card-row">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <div>
+            <h3>Recrutement actif</h3>
+            <p>Plusieurs chauffeurs sont recrutés en ce moment : un signal concret d'une activité qui grandit.</p>
+          </div>
+        </div>
+        <div class="card-row">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 2v4M16 2v4M3 10h18"/></svg></div>
+          <div>
+            <h3>Une offre déjà structurée</h3>
+            <p>Trois formules claires (location, vente, contrat) plutôt qu'un service générique : une base solide pour une vitrine lisible.</p>
+          </div>
+        </div>
+        <div class="card-row">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="9" width="4" height="12"/><path d="M9 21V9l7-6 1 2-2 6h6l-3 10z"/></svg></div>
+          <div>
+            <h3>Présence LinkedIn active</h3>
+            <p>Le dirigeant et l'entreprise sont déjà visibles sur LinkedIn : une base à prolonger plutôt qu'un point de départ à créer.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>Document préparé par Emmanuel Kongo — proposition commerciale, non contractuelle.</span>
+    <span class="mono">2 / 6</span>
+  </div>
+</div>
+
+<!-- ============ PAGE 3 — OPPORTUNITÉS IDENTIFIÉES ============ -->
+<div class="page">
+  <div class="page-header">
+    <div class="brand">
+      <span class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#241a08" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13l1.5-5A2 2 0 0 1 6.4 6.5h11.2A2 2 0 0 1 19.5 8l1.5 5"/><path d="M2 13h20v4a1 1 0 0 1-1 1h-1.5a1 1 0 0 1-1-1v-1h-13v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"/><circle cx="7" cy="17.5" r="1.6"/><circle cx="17" cy="17.5" r="1.6"/></svg>
+      </span>
+      Brandon Service Location
+    </div>
+    <div class="doc-label">Audit commercial</div>
+  </div>
+
+  <div class="content">
+    <div class="eyebrow">Opportunités identifiées</div>
+    <h2 class="section-title">Deux leviers concrets, à impact direct</h2>
+
+    <div style="margin-top:7mm;">
+      <div class="opp-card">
+        <div class="opp-num">01</div>
+        <h3>Vitrine et prise de contact centralisée</h3>
+        <p>Une personne qui recherche « location de véhicule avec chauffeur à Brazzaville » en ligne trouve aujourd'hui d'abord les prestataires visibles sur le web. Donner à Brandon cette même visibilité permettrait de capter directement ces recherches, en complément du réseau et du bouche-à-oreille déjà actifs — et de centraliser les demandes de location, de vente et de contrat en un seul endroit.</p>
+      </div>
+      <div class="opp-card">
+        <div class="opp-num">02</div>
+        <h3>Adresse email professionnelle</h3>
+        <p>Pour la troisième formule, la mise à disposition par contrat, les services achats et comptabilité des entreprises demandent souvent un contact non personnel, du type <span class="mono">contact@brandonservice.cg</span>. Une adresse au nom de l'entreprise renforce la crédibilité face à ces interlocuteurs et facilite le suivi administratif des contrats.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>Document préparé par Emmanuel Kongo — proposition commerciale, non contractuelle.</span>
+    <span class="mono">3 / 6</span>
+  </div>
+</div>
+
+<!-- ============ PAGE 4 — IMPACT + SOLUTION PROPOSÉE ============ -->
+<div class="page">
+  <div class="page-header">
+    <div class="brand">
+      <span class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#241a08" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13l1.5-5A2 2 0 0 1 6.4 6.5h11.2A2 2 0 0 1 19.5 8l1.5 5"/><path d="M2 13h20v4a1 1 0 0 1-1 1h-1.5a1 1 0 0 1-1-1v-1h-13v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"/><circle cx="7" cy="17.5" r="1.6"/><circle cx="17" cy="17.5" r="1.6"/></svg>
+      </span>
+      Brandon Service Location
+    </div>
+    <div class="doc-label">Audit commercial</div>
+  </div>
+
+  <div class="content">
+    <div class="section-block">
+      <div class="eyebrow">Impact attendu</div>
+      <h2 class="section-title">Ce que ces deux leviers changent concrètement</h2>
+      <div class="impact-list" style="margin-top:5mm;">
+        <div class="impact-item"><span class="dot"></span><p>Une vitrine réduit le risque de perdre des demandes d'entreprises qui comparent plusieurs prestataires avant d'appeler.</p></div>
+        <div class="impact-item"><span class="dot"></span><p>Une adresse professionnelle facilite la facturation et les échanges avec des clients de type entreprises ou institutions.</p></div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <div class="eyebrow">Solution proposée</div>
+      <h2 class="section-title">Deux éléments, livrés ensemble</h2>
+      <div class="deliverable-box" style="margin-top:5mm;">
+        <h3>Ce qui est livré</h3>
+        <div class="deliverable-row">
+          <span class="n">01</span>
+          <div><b>Site vitrine, une page</b><p>Les trois offres, un catalogue de flotte, et un bouton de réservation WhatsApp direct.</p></div>
+        </div>
+        <div class="deliverable-row">
+          <span class="n">02</span>
+          <div><b>Email professionnel</b><p>Une adresse sur le nom de domaine du site (ex. contact@brandonservice.cg).</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>Document préparé par Emmanuel Kongo — proposition commerciale, non contractuelle.</span>
+    <span class="mono">4 / 6</span>
+  </div>
+</div>
+
+<!-- ============ PAGE 5 — EXEMPLE CONCRET ============ -->
+<div class="page">
+  <div class="page-header">
+    <div class="brand">
+      <span class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#241a08" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13l1.5-5A2 2 0 0 1 6.4 6.5h11.2A2 2 0 0 1 19.5 8l1.5 5"/><path d="M2 13h20v4a1 1 0 0 1-1 1h-1.5a1 1 0 0 1-1-1v-1h-13v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"/><circle cx="7" cy="17.5" r="1.6"/><circle cx="17" cy="17.5" r="1.6"/></svg>
+      </span>
+      Brandon Service Location
+    </div>
+    <div class="doc-label">Audit commercial</div>
+  </div>
+
+  <div class="content">
+    <div class="eyebrow">Exemple concret</div>
+    <h2 class="section-title">Un premier aperçu de la vitrine</h2>
+
+    <div class="example-frame" style="margin-top:6mm;">
+      <div class="example-desktop">
+        <img src="assets/preview-desktop.png" alt="Aperçu desktop de la maquette">
+      </div>
+      <div class="example-row">
+        <div class="example-mobile">
+          <img src="assets/preview-mobile.png" alt="Aperçu mobile de la maquette">
+        </div>
+      </div>
+    </div>
+    <p class="example-caption">Exemple non officiel, à adapter avec vos véhicules et tarifs réels.<br><span class="mono">claude.ai/artifact/4rubjdBzWUScLNcki8qmMV</span></p>
+  </div>
+
+  <div class="page-footer">
+    <span>Document préparé par Emmanuel Kongo — proposition commerciale, non contractuelle.</span>
+    <span class="mono">5 / 6</span>
+  </div>
+</div>
+
+<!-- ============ PAGE 6 — PRIORISATION + PROCHAINE ÉTAPE ============ -->
+<div class="page">
+  <div class="page-header">
+    <div class="brand">
+      <span class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#241a08" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13l1.5-5A2 2 0 0 1 6.4 6.5h11.2A2 2 0 0 1 19.5 8l1.5 5"/><path d="M2 13h20v4a1 1 0 0 1-1 1h-1.5a1 1 0 0 1-1-1v-1h-13v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"/><circle cx="7" cy="17.5" r="1.6"/><circle cx="17" cy="17.5" r="1.6"/></svg>
+      </span>
+      Brandon Service Location
+    </div>
+    <div class="doc-label">Audit commercial</div>
+  </div>
+
+  <div class="content">
+    <div class="section-block">
+      <div class="eyebrow">Priorisation</div>
+      <h2 class="section-title">Par où commencer</h2>
+      <div class="card" style="margin-top:5mm;">
+        <div class="priority-row">
+          <span class="priority-tag p1">Priorité</span>
+          <p><b>Le site vitrine</b> : c'est l'élément qui a un impact direct sur les nouvelles demandes, en captant les recherches en ligne dès sa mise en place.</p>
+        </div>
+        <div class="priority-row">
+          <span class="priority-tag p2">Complément</span>
+          <p><b>L'adresse email professionnelle</b> est incluse aux côtés du site, sans surcoût de développement significatif.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-box">
+    <h3>Prochaine étape</h3>
+    <p>15 minutes d'échange, sans engagement, pour voir si ça correspond à vos besoins.</p>
+    <div class="cta-contacts">
+      <div class="cta-contact"><div class="lbl">Emmanuel Kongo — développeur freelance</div></div>
+    </div>
+    <div class="cta-contacts">
+      <div class="cta-contact"><div class="lbl">WhatsApp / Téléphone</div><div class="val">+242 05 004 47 96</div></div>
+      <div class="cta-contact"><div class="lbl">Email</div><div class="val">kined.dev@gmail.com</div></div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>Document préparé par Emmanuel Kongo — proposition commerciale, non contractuelle.</span>
+    <span class="mono">6 / 6</span>
+  </div>
+</div>
+
+</body>
+</html>
