@@ -4,27 +4,38 @@
 <meta charset="utf-8" />
 <title>Healthy Baobab</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<script>
+  try {
+    if (localStorage.getItem('hb-theme') === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+  } catch (e) {}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
+    /* light mode (default) */
+    --forest: #faf6ea;
+    --forest-2: #f2ecdc;
+    --forest-line: rgba(22,52,37,0.13);
+    --cream: #1c3326;
+    --cream-soft: rgba(28,51,38,0.64);
+    --mango: #ef8b3f;
+    --mango-deep: #d9691b;
+    --papaya: #e0562f;
+    --baobab: #b98a4e;
+    --card: #fffdf6;
+    --accent-text: var(--mango-deep);
+  }
+  :root[data-theme="dark"] {
     --forest: #163425;
     --forest-2: #1e4531;
     --forest-line: rgba(247,240,221,0.14);
     --cream: #f7f0dd;
     --cream-soft: rgba(247,240,221,0.66);
-    --mango: #ef8b3f;
-    --mango-deep: #d9691b;
-    --papaya: #e0562f;
-    --baobab: #b98a4e;
     --card: #1c4230;
+    --accent-text: var(--mango);
   }
-  :root[data-theme="light"] {
-    --forest: #163425;
-    --forest-2: #1e4531;
-  }
-  /* Single committed dark-forest world by design; keep explicit values for both stamps */
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
   body {
@@ -70,30 +81,47 @@
     .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 14px 26px -10px rgba(0,0,0,0.55); }
     .btn-ghost:hover { border-color: var(--cream-soft); background: rgba(247,240,221,0.06); }
   }
+  .theme-toggle {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0;
+    border: 1px solid var(--forest-line); background: transparent; color: var(--cream); cursor: pointer;
+    transition: border-color .15s ease, background .15s ease, transform .16s cubic-bezier(.16,1,.3,1);
+  }
+  .theme-toggle:active { transform: scale(0.93); }
+  @media (hover: hover) and (pointer: fine) {
+    .theme-toggle:hover { border-color: var(--cream-soft); background: rgba(127,127,127,0.1); }
+  }
+  .theme-toggle svg { width: 17px; height: 17px; }
+  .theme-toggle .icon-sun { display: none; }
+  :root[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+  :root[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
 
   .hero { padding-block: 50px 20px; display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 44px; align-items: center; }
   .hero h1 { font-size: clamp(2.2rem, 4.8vw, 3.5rem); line-height: 1.02; }
-  .hero h1 .accent { color: var(--mango); }
+  .hero h1 .accent { color: var(--accent-text); }
   .hero p.lede { color: var(--cream-soft); font-size: 1.06rem; line-height: 1.6; max-width: 46ch; margin-top: 18px; }
   .hero-ctas { display: flex; gap: 12px; margin-top: 30px; flex-wrap: wrap; }
   .hero-tags { display: flex; gap: 10px; margin-top: 30px; flex-wrap: wrap; }
   .tag { font-size: 0.78rem; color: var(--cream-soft); border: 1px dashed var(--forest-line); border-radius: 999px; padding: 6px 13px; }
 
-  .fruit-wheel { position: relative; aspect-ratio: 1; max-width: 380px; margin-inline: auto; }
-  .fruit-wheel .ring { position: absolute; inset: 0; border-radius: 50%; border: 1.5px dashed var(--forest-line); }
-  .fruit-wheel .ring.r2 { inset: 42px; }
+  .fruit-wheel { position: relative; aspect-ratio: 1; width: 100%; max-width: 380px; justify-self: center; }
+  .fruit-wheel .ring { position: absolute; inset: 0; border-radius: 50%; border: 1.5px dashed var(--forest-line); animation: spin-slow 90s linear infinite; }
+  .fruit-wheel .ring.r2 { inset: 42px; animation: spin-slow 70s linear infinite reverse; }
+  @keyframes spin-slow { to { transform: rotate(360deg); } }
   .fruit-dot {
     position: absolute; width: 92px; height: 92px; border-radius: 50%;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     font-size: 0.76rem; font-weight: 700; text-align: center; gap: 2px; color: #241505;
     box-shadow: 0 14px 30px -14px rgba(0,0,0,0.5);
+    animation: dot-float 5s cubic-bezier(.45,0,.55,1) infinite;
   }
+  @keyframes dot-float { 0%, 100% { translate: 0 0; } 50% { translate: 0 -6px; } }
   .fruit-dot svg { width: 26px; height: 26px; }
   .fd1 { top: -8px; left: 50%; transform: translateX(-50%); background: radial-gradient(circle at 32% 28%, #f6c15a, var(--mango)); }
-  .fd2 { top: 26%; right: -10px; background: radial-gradient(circle at 32% 28%, #ef7a6b, var(--papaya)); }
-  .fd3 { bottom: 26%; right: -10px; background: radial-gradient(circle at 32% 28%, #b7d97a, #7aa63e); color: #16240a; }
-  .fd4 { bottom: -8px; left: 50%; transform: translateX(-50%); background: radial-gradient(circle at 32% 28%, #f4a2c1, #d9527f); }
-  .fd5 { top: 26%; left: -10px; background: radial-gradient(circle at 32% 28%, #d8b27a, var(--baobab)); }
+  .fd2 { top: 26%; right: -10px; background: radial-gradient(circle at 32% 28%, #ef7a6b, var(--papaya)); animation-delay: .3s; }
+  .fd3 { bottom: 26%; right: -10px; background: radial-gradient(circle at 32% 28%, #b7d97a, #7aa63e); color: #16240a; animation-delay: .6s; }
+  .fd4 { bottom: -8px; left: 50%; transform: translateX(-50%); background: radial-gradient(circle at 32% 28%, #f4a2c1, #d9527f); animation-delay: .9s; }
+  .fd5 { top: 26%; left: -10px; background: radial-gradient(circle at 32% 28%, #d8b27a, var(--baobab)); animation-delay: 1.2s; }
   .fruit-center {
     position: absolute; inset: 32%; border-radius: 50%; background: var(--card);
     border: 1px solid var(--forest-line); display: flex; align-items: center; justify-content: center;
@@ -115,12 +143,12 @@
   .sw5 { background: linear-gradient(135deg, #d8b27a, var(--baobab)); }
   .menu-card h3 { font-size: 1rem; margin-bottom: 6px; }
   .menu-card p { font-size: 0.85rem; color: var(--cream-soft); line-height: 1.5; margin: 0 0 12px; }
-  .menu-card .price { font-weight: 700; font-size: 0.92rem; color: var(--mango); font-variant-numeric: tabular-nums; }
+  .menu-card .price { font-weight: 700; font-size: 0.92rem; color: var(--accent-text); font-variant-numeric: tabular-nums; }
 
   .why { display: flex; border-top: 1px solid var(--forest-line); border-bottom: 1px solid var(--forest-line); }
   .why-item { flex: 1; padding: 26px 28px; border-left: 1px solid var(--forest-line); }
   .why-item:first-child { border-left: none; padding-left: 0; }
-  .why-item .mark { width: 30px; height: 30px; margin-bottom: 16px; color: var(--mango); }
+  .why-item .mark { width: 30px; height: 30px; margin-bottom: 16px; color: var(--accent-text); }
   .why-item h3 { font-size: 1.02rem; margin-bottom: 8px; }
   .why-item p { font-size: 0.88rem; color: var(--cream-soft); line-height: 1.55; margin: 0; }
 
@@ -150,7 +178,7 @@
   .hero > div:first-child > *:nth-child(4) { animation-delay: .15s; }
   .fruit-wheel { animation: rise-in .8s cubic-bezier(.16,1,.3,1) .1s both; }
   @media (prefers-reduced-motion: reduce) {
-    .hero > div:first-child > *, .fruit-wheel { animation: none; }
+    .hero > div:first-child > *, .fruit-wheel, .fruit-wheel .ring, .fruit-dot { animation: none; }
   }
 
   @media (max-width: 760px) {
@@ -181,7 +209,13 @@
       <a href="#pourquoi">Pourquoi nous</a>
       <a href="#contact">Contact</a>
     </nav>
-    <a class="btn-ghost" href="#contact">Nous contacter</a>
+    <div style="display:flex; align-items:center; gap:12px;">
+      <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Basculer le mode sombre">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2.5M12 19v2.5M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M2.5 12H5M19 12h2.5M4.6 19.4l1.8-1.8M17.6 6.4l1.8-1.8"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg>
+      </button>
+      <a class="btn-ghost" href="#contact">Nous contacter</a>
+    </div>
   </div>
 
   <div class="hero">
@@ -295,6 +329,22 @@
   </footer>
 
 </div>
+
+<script>
+  (function () {
+    var btn = document.getElementById('theme-toggle');
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+      var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      if (isDark) {
+        document.documentElement.removeAttribute('data-theme');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+      try { localStorage.setItem('hb-theme', isDark ? 'light' : 'dark'); } catch (e) {}
+    });
+  })();
+</script>
 
 </body>
 </html>
