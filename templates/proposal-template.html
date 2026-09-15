@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<title>[Nom du prospect]</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Choisir une paire de polices distinctive pour ce secteur/client plutôt que réutiliser celle d'une maquette précédente. -->
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;900&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #14181c;
+    --ink-soft: #565f66;
+    --paper: #f3f2ee;
+    --paper-raised: #ffffff;
+    --line: rgba(20,24,28,0.12);
+    --accent: #d9691b;
+    --accent-tint: #fbeed9;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ink: #eef0ee;
+      --ink-soft: #a9b0ab;
+      --paper: #14181c;
+      --paper-raised: #1d2227;
+      --line: rgba(238,240,238,0.14);
+      --accent: #ef8b3f;
+      --accent-tint: #2c2214;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #eef0ee;
+    --ink-soft: #a9b0ab;
+    --paper: #14181c;
+    --paper-raised: #1d2227;
+    --line: rgba(238,240,238,0.14);
+    --accent: #ef8b3f;
+    --accent-tint: #2c2214;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
+    padding-inline: 20px;
+    padding-block: max(20px, env(safe-area-inset-top)) max(40px, env(safe-area-inset-bottom));
+  }
+  .wrap { max-width: 1080px; margin-inline: auto; }
+  h1, h2, h3 { font-family: "Archivo", system-ui, sans-serif; font-weight: 900; text-wrap: balance; margin: 0; letter-spacing: -0.01em; }
+  a { color: inherit; }
+
+  .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 18px; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+  .brand { font-weight: 900; font-size: 1.15rem; }
+  .topbar nav { display: flex; gap: 22px; font-size: 0.88rem; color: var(--ink-soft); font-weight: 500; }
+  .topbar nav a { text-decoration: none; }
+  .btn-primary {
+    background: var(--accent); color: #fff; padding: 13px 24px; border-radius: 10px;
+    font-weight: 700; text-decoration: none; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-ghost {
+    border: 1px solid var(--line); padding: 13px 22px; border-radius: 10px;
+    font-weight: 600; text-decoration: none; font-size: 0.95rem; color: var(--ink);
+  }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--accent-tint); color: var(--accent);
+    border-radius: 999px; padding: 6px 14px; font-size: 0.78rem; font-weight: 600;
+    margin-bottom: 22px;
+  }
+  .hero { padding-block: 48px 40px; display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 48px; align-items: center; }
+  .hero h1 { font-size: clamp(2.1rem, 4.6vw, 3.3rem); line-height: 1.03; }
+  .hero p.lede { color: var(--ink-soft); font-size: 1.05rem; line-height: 1.55; max-width: 46ch; margin-top: 18px; }
+  .hero-ctas { display: flex; gap: 12px; margin-top: 28px; flex-wrap: wrap; }
+  .hero-visual {
+    background: var(--paper-raised); border: 1px solid var(--line); border-radius: 18px;
+    min-height: 260px; display: flex; align-items: center; justify-content: center;
+    color: var(--ink-soft); font-size: 0.85rem;
+  }
+
+  section { padding-block: 46px; border-top: 1px solid var(--line); }
+  .eyebrow { font-size: 0.76rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 10px; }
+  .section-head { max-width: 60ch; margin-bottom: 32px; }
+  .section-head h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
+  .section-head p { color: var(--ink-soft); margin-top: 10px; line-height: 1.5; }
+
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .item { background: var(--paper-raised); border: 1px solid var(--line); border-radius: 14px; padding: 22px; }
+  .item h3 { font-size: 1.02rem; font-weight: 700; margin-bottom: 8px; }
+  .item p { font-size: 0.88rem; color: var(--ink-soft); line-height: 1.5; margin: 0; }
+
+  .contact-panel {
+    background: var(--ink); color: var(--paper); border-radius: 20px; padding: 40px;
+    display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 32px; align-items: center;
+  }
+  .contact-panel h2 { color: var(--paper); }
+  .contact-panel p { color: rgba(255,255,255,0.7); margin-top: 10px; line-height: 1.55; max-width: 44ch; }
+
+  footer { padding-block: 28px 10px; text-align: center; }
+  footer .disclaimer {
+    font-size: 0.78rem; color: var(--ink-soft); max-width: 56ch; margin: 0 auto; line-height: 1.6;
+    border: 1px dashed var(--line); border-radius: 12px; padding: 14px 18px;
+  }
+
+  @media (max-width: 760px) {
+    .hero { grid-template-columns: 1fr; }
+    .grid-3 { grid-template-columns: 1fr; }
+    .contact-panel { grid-template-columns: 1fr; padding: 26px; text-align: left; }
+    .topbar nav { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="topbar">
+    <div class="brand">[Nom du prospect]</div>
+    <nav>
+      <a href="#offre">[Section 1]</a>
+      <a href="#pourquoi">Pourquoi nous</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="btn-ghost" href="#contact">Nous contacter</a>
+  </div>
+
+  <div class="hero">
+    <div>
+      <span class="badge">[Ville] · [accroche courte]</span>
+      <h1>[Titre principal accrocheur]</h1>
+      <p class="lede">[Description en 1-2 phrases de l'activité du prospect et de la valeur de la page.]</p>
+      <div class="hero-ctas">
+        <a class="btn-primary" href="#offre">[CTA principal] →</a>
+        <a class="btn-ghost" href="#contact">[CTA secondaire]</a>
+      </div>
+    </div>
+    <div class="hero-visual">[Visuel / carte tarifaire / illustration à concevoir selon le secteur]</div>
+  </div>
+
+  <section id="offre">
+    <div class="section-head">
+      <div class="eyebrow">[Eyebrow]</div>
+      <h2>[Titre de la section offre]</h2>
+      <p>[Description de la gamme / des services proposés.]</p>
+    </div>
+    <div class="grid-3">
+      <div class="item"><h3>[Élément 1]</h3><p>[Description]</p></div>
+      <div class="item"><h3>[Élément 2]</h3><p>[Description]</p></div>
+      <div class="item"><h3>[Élément 3]</h3><p>[Description]</p></div>
+    </div>
+  </section>
+
+  <section id="pourquoi">
+    <div class="section-head">
+      <div class="eyebrow">Pourquoi [nom du prospect]</div>
+      <h2>[Ce qui distingue le prospect]</h2>
+    </div>
+    <div class="grid-3">
+      <div class="item"><h3>[Argument 1]</h3><p>[Description]</p></div>
+      <div class="item"><h3>[Argument 2]</h3><p>[Description]</p></div>
+      <div class="item"><h3>[Argument 3]</h3><p>[Description]</p></div>
+    </div>
+  </section>
+
+  <section id="contact" style="border-bottom: none;">
+    <div class="contact-panel">
+      <div>
+        <h2>[Question d'accroche vers la conversion]</h2>
+        <p>[Rappel que cette page est une proposition de vitrine, en complément des canaux existants du prospect.]</p>
+      </div>
+      <div>
+        <div style="font-size:0.74rem; text-transform:uppercase; letter-spacing:0.06em; opacity:0.7;">Contact</div>
+        <div style="font-size:1.1rem; font-weight:700;">[Nom / téléphone / WhatsApp]</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="disclaimer">
+      Ceci est une maquette conceptuelle réalisée par <strong>Emmanuel Kongo</strong> à titre de proposition commerciale pour [Nom du prospect] — pas un site en production. Contenus et tarifs sont illustratifs et à remplacer par les informations réelles.
+    </div>
+  </footer>
+
+</div>
+
+</body>
+</html>

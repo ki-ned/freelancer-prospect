@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<title>Maquettes prospects — Emmanuel Kongo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;900&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #14181c;
+    --ink-soft: #565f66;
+    --paper: #f3f2ee;
+    --paper-raised: #ffffff;
+    --line: rgba(20,24,28,0.12);
+    --accent: #d9691b;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ink: #eef0ee;
+      --ink-soft: #a9b0ab;
+      --paper: #14181c;
+      --paper-raised: #1d2227;
+      --line: rgba(238,240,238,0.14);
+      --accent: #ef8b3f;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #eef0ee;
+    --ink-soft: #a9b0ab;
+    --paper: #14181c;
+    --paper-raised: #1d2227;
+    --line: rgba(238,240,238,0.14);
+    --accent: #ef8b3f;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
+    padding-inline: 20px;
+    padding-block: max(40px, env(safe-area-inset-top)) max(40px, env(safe-area-inset-bottom));
+  }
+  .wrap { max-width: 880px; margin-inline: auto; }
+  h1 { font-family: "Archivo", system-ui, sans-serif; font-weight: 900; font-size: clamp(1.8rem, 4vw, 2.4rem); letter-spacing: -0.01em; margin: 0 0 10px; }
+  p.lede { color: var(--ink-soft); font-size: 1.02rem; line-height: 1.6; max-width: 60ch; margin: 0 0 40px; }
+  .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+  .card {
+    background: var(--paper-raised); border: 1px solid var(--line); border-radius: 16px;
+    padding: 22px; text-decoration: none; color: inherit; display: block;
+  }
+  .card .tag { display: inline-block; font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent); margin-bottom: 10px; }
+  .card h2 { font-family: "Archivo", sans-serif; font-weight: 700; font-size: 1.1rem; margin: 0 0 6px; }
+  .card p { font-size: 0.88rem; color: var(--ink-soft); line-height: 1.5; margin: 0; }
+  footer { margin-top: 48px; font-size: 0.8rem; color: var(--ink-soft); }
+  @media (max-width: 640px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Maquettes de prospection</h1>
+  <p class="lede">Propositions commerciales réalisées par Emmanuel Kongo pour des prospects en République du Congo — pages de vitrine conceptuelles, à faire évoluer selon les retours clients.</p>
+
+  <div class="grid">
+    <a class="card" href="prospects/healthy-baobab/">
+      <span class="tag">Pointe-Noire · Agroalimentaire</span>
+      <h2>Healthy Baobab</h2>
+      <p>Vitrine pour une gamme de smoothies et produits sains à base de fruits et de baobab.</p>
+    </a>
+    <a class="card" href="prospects/brandon-service-location/">
+      <span class="tag">Brazzaville · Transport</span>
+      <h2>Brandon Service Location</h2>
+      <p>Vitrine pour la location de véhicules avec chauffeur, la vente et les contrats entreprises.</p>
+    </a>
+  </div>
+
+  <footer>Emmanuel Kongo — freelance</footer>
+</div>
+</body>
+</html>

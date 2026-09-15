@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<title>Healthy Baobab</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --forest: #163425;
+    --forest-2: #1e4531;
+    --forest-line: rgba(247,240,221,0.14);
+    --cream: #f7f0dd;
+    --cream-soft: rgba(247,240,221,0.66);
+    --mango: #ef8b3f;
+    --mango-deep: #d9691b;
+    --papaya: #e0562f;
+    --baobab: #b98a4e;
+    --card: #1c4230;
+  }
+  :root[data-theme="light"] {
+    --forest: #163425;
+    --forest-2: #1e4531;
+  }
+  /* Single committed dark-forest world by design; keep explicit values for both stamps */
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--forest);
+    color: var(--cream);
+    font-family: "Karla", system-ui, sans-serif;
+    padding-inline: 20px;
+    padding-block: max(20px, env(safe-area-inset-top)) max(44px, env(safe-area-inset-bottom));
+    -webkit-font-smoothing: antialiased;
+    background-image:
+      radial-gradient(600px 300px at 92% -5%, rgba(239,139,63,0.16), transparent 60%),
+      radial-gradient(500px 260px at 5% 15%, rgba(217,105,27,0.10), transparent 55%);
+  }
+  .wrap { max-width: 1060px; margin-inline: auto; }
+  h1, h2, h3 { font-family: "Bricolage Grotesque", system-ui, sans-serif; font-weight: 800; text-wrap: balance; margin: 0; letter-spacing: -0.01em; }
+  a { color: inherit; }
+  ::selection { background: var(--mango); color: #1c1206; }
+
+  .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 20px; border-bottom: 1px solid var(--forest-line); flex-wrap: wrap; }
+  .brand { display: flex; align-items: center; gap: 10px; font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 1.2rem; }
+  .brand-mark { width: 36px; height: 36px; border-radius: 50%; background: radial-gradient(circle at 32% 30%, var(--mango), var(--mango-deep) 70%); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .brand-mark svg { width: 19px; height: 19px; }
+  .topbar nav { display: flex; gap: 24px; font-size: 0.88rem; color: var(--cream-soft); font-weight: 500; }
+  .topbar nav a { text-decoration: none; }
+  .topbar nav a:hover { color: var(--cream); }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--mango), var(--papaya)); color: #241505;
+    padding: 12px 22px; border-radius: 999px; font-weight: 700; text-decoration: none; font-size: 0.92rem;
+    display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 10px 26px -12px rgba(217,105,27,0.55);
+  }
+  .btn-ghost {
+    border: 1px solid var(--forest-line); padding: 11px 20px; border-radius: 999px;
+    font-weight: 600; text-decoration: none; font-size: 0.9rem; color: var(--cream);
+  }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(239,139,63,0.14); color: var(--mango);
+    border-radius: 999px; padding: 6px 14px; font-size: 0.78rem; font-weight: 700;
+    margin-bottom: 22px; border: 1px solid rgba(239,139,63,0.3);
+  }
+  .hero { padding-block: 50px 20px; display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 44px; align-items: center; }
+  .hero h1 { font-size: clamp(2.2rem, 4.8vw, 3.5rem); line-height: 1.02; }
+  .hero h1 .accent { color: var(--mango); }
+  .hero p.lede { color: var(--cream-soft); font-size: 1.06rem; line-height: 1.6; max-width: 46ch; margin-top: 18px; }
+  .hero-ctas { display: flex; gap: 12px; margin-top: 30px; flex-wrap: wrap; }
+  .hero-tags { display: flex; gap: 10px; margin-top: 30px; flex-wrap: wrap; }
+  .tag { font-size: 0.78rem; color: var(--cream-soft); border: 1px dashed var(--forest-line); border-radius: 999px; padding: 6px 13px; }
+
+  .fruit-wheel { position: relative; aspect-ratio: 1; max-width: 380px; margin-inline: auto; }
+  .fruit-wheel .ring { position: absolute; inset: 0; border-radius: 50%; border: 1.5px dashed var(--forest-line); }
+  .fruit-wheel .ring.r2 { inset: 42px; }
+  .fruit-dot {
+    position: absolute; width: 92px; height: 92px; border-radius: 50%;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    font-size: 0.68rem; font-weight: 700; text-align: center; gap: 2px; color: #241505;
+    box-shadow: 0 14px 30px -14px rgba(0,0,0,0.5);
+  }
+  .fruit-dot span { font-size: 1.4rem; }
+  .fd1 { top: -8px; left: 50%; transform: translateX(-50%); background: radial-gradient(circle at 32% 28%, #f6c15a, var(--mango)); }
+  .fd2 { top: 26%; right: -10px; background: radial-gradient(circle at 32% 28%, #ef7a6b, var(--papaya)); }
+  .fd3 { bottom: 26%; right: -10px; background: radial-gradient(circle at 32% 28%, #b7d97a, #7aa63e); color: #16240a; }
+  .fd4 { bottom: -8px; left: 50%; transform: translateX(-50%); background: radial-gradient(circle at 32% 28%, #f4a2c1, #d9527f); }
+  .fd5 { top: 26%; left: -10px; background: radial-gradient(circle at 32% 28%, #d8b27a, var(--baobab)); }
+  .fruit-center {
+    position: absolute; inset: 32%; border-radius: 50%; background: var(--card);
+    border: 1px solid var(--forest-line); display: flex; align-items: center; justify-content: center;
+    text-align: center; padding: 10px; font-family: "Bricolage Grotesque", sans-serif; font-weight: 700; font-size: 0.85rem; color: var(--cream-soft);
+  }
+
+  section { padding-block: 44px; border-top: 1px solid var(--forest-line); }
+  .eyebrow { font-size: 0.76rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.09em; color: var(--mango); margin-bottom: 10px; }
+  .section-head { max-width: 60ch; margin-bottom: 30px; }
+  .section-head h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
+  .section-head p { color: var(--cream-soft); margin-top: 10px; line-height: 1.55; }
+
+  .menu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .menu-card { background: var(--card); border: 1px solid var(--forest-line); border-radius: 16px; padding: 18px; }
+  .swatch { height: 84px; border-radius: 10px; margin-bottom: 14px; }
+  .sw1 { background: linear-gradient(135deg, #f6c15a, var(--mango)); }
+  .sw2 { background: linear-gradient(135deg, #ef7a6b, var(--papaya)); }
+  .sw3 { background: linear-gradient(135deg, #c8e08a, #7aa63e); }
+  .sw4 { background: linear-gradient(135deg, #f4a2c1, #d9527f); }
+  .sw5 { background: linear-gradient(135deg, #d8b27a, var(--baobab)); }
+  .menu-card h3 { font-size: 1rem; margin-bottom: 6px; }
+  .menu-card p { font-size: 0.85rem; color: var(--cream-soft); line-height: 1.5; margin: 0 0 12px; }
+  .menu-card .price { font-weight: 700; font-size: 0.92rem; color: var(--mango); }
+
+  .why { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .why-item .num { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 1.6rem; color: var(--mango); }
+  .why-item h3 { font-size: 1.02rem; margin-top: 6px; margin-bottom: 8px; }
+  .why-item p { font-size: 0.88rem; color: var(--cream-soft); line-height: 1.55; margin: 0; }
+
+  .contact-panel {
+    background: var(--card); border: 1px solid var(--forest-line); border-radius: 20px; padding: 40px;
+    display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 32px; align-items: center;
+  }
+  .contact-panel h2 { font-size: clamp(1.4rem, 3vw, 2rem); }
+  .contact-panel p { color: var(--cream-soft); margin-top: 10px; line-height: 1.55; max-width: 44ch; }
+  .founder { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
+  .founder .lbl { font-size: 0.74rem; color: var(--cream-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .founder .name { font-family: "Bricolage Grotesque", sans-serif; font-size: 1.15rem; font-weight: 700; }
+
+  footer { padding-block: 28px 10px; text-align: center; }
+  footer .disclaimer {
+    font-size: 0.78rem; color: var(--cream-soft); max-width: 58ch; margin: 0 auto; line-height: 1.6;
+    border: 1px dashed var(--forest-line); border-radius: 12px; padding: 14px 18px;
+  }
+
+  @media (max-width: 760px) {
+    .hero { grid-template-columns: 1fr; padding-block: 34px 10px; }
+    .menu-grid, .why { grid-template-columns: 1fr; }
+    .contact-panel { grid-template-columns: 1fr; padding: 26px; text-align: left; }
+    .topbar nav { display: none; }
+    .fruit-wheel { margin-top: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="topbar">
+    <div class="brand">
+      <span class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#241505" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c4-2 7-6 7-11a7 7 0 0 0-14 0c0 5 3 9 7 11z"/><path d="M12 10v7"/></svg>
+      </span>
+      Healthy Baobab
+    </div>
+    <nav>
+      <a href="#gamme">La gamme</a>
+      <a href="#pourquoi">Pourquoi nous</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="btn-ghost" href="#contact">Nous contacter</a>
+  </div>
+
+  <div class="hero">
+    <div>
+      <span class="badge">🌱 Pointe-Noire · Fait maison, sans additifs</span>
+      <h1>Le fruit du pays,<br><span class="accent">pressé pour vous.</span></h1>
+      <p class="lede">Healthy Baobab prépare des smoothies et produits sains à base de fruits et de baobab, pensés pour ceux qui veulent manger vrai sans sacrifier le goût.</p>
+      <div class="hero-ctas">
+        <a class="btn-primary" href="#gamme">Découvrir la gamme →</a>
+        <a class="btn-ghost" href="#contact">Commander</a>
+      </div>
+      <div class="hero-tags">
+        <span class="tag">100% fruits locaux</span>
+        <span class="tag">Sans sucre ajouté*</span>
+        <span class="tag">Commande sur message</span>
+      </div>
+    </div>
+    <div class="fruit-wheel">
+      <div class="ring"></div>
+      <div class="ring r2"></div>
+      <div class="fruit-dot fd1"><span>🌱</span>Baobab</div>
+      <div class="fruit-dot fd2"><span>🥭</span>Mangue</div>
+      <div class="fruit-dot fd3"><span>🍈</span>Ananas-Coco</div>
+      <div class="fruit-dot fd4"><span>🌺</span>Bissap</div>
+      <div class="fruit-dot fd5"><span>🫚</span>Gingembre</div>
+      <div class="fruit-center">Fait le<br>jour même</div>
+    </div>
+  </div>
+
+  <section id="gamme">
+    <div class="section-head">
+      <div class="eyebrow">Exemple de gamme</div>
+      <h2>Cinq smoothies pour commencer</h2>
+      <p>Une page produit simple, pensée pour être partagée en un lien — à remplacer par vos recettes et vos photos réelles.</p>
+    </div>
+    <div class="menu-grid">
+      <div class="menu-card">
+        <div class="swatch sw1"></div>
+        <h3>Baobab Classique</h3>
+        <p>Pulpe de baobab, banane, miel local.</p>
+        <div class="price">2 000 XAF*</div>
+      </div>
+      <div class="menu-card">
+        <div class="swatch sw2"></div>
+        <h3>Mangue Passion</h3>
+        <p>Mangue de saison, fruit de la passion, citron vert.</p>
+        <div class="price">2 000 XAF*</div>
+      </div>
+      <div class="menu-card">
+        <div class="swatch sw3"></div>
+        <h3>Ananas Coco</h3>
+        <p>Ananas frais, lait de coco, menthe.</p>
+        <div class="price">2 200 XAF*</div>
+      </div>
+      <div class="menu-card">
+        <div class="swatch sw4"></div>
+        <h3>Bissap Gingembre</h3>
+        <p>Infusion de bissap, gingembre frais, citron.</p>
+        <div class="price">1 800 XAF*</div>
+      </div>
+      <div class="menu-card">
+        <div class="swatch sw5"></div>
+        <h3>Baobab Énergie</h3>
+        <p>Baobab, dattes, avoine — pensé pour le matin.</p>
+        <div class="price">2 200 XAF*</div>
+      </div>
+      <div class="menu-card" style="display:flex; flex-direction:column; justify-content:center; align-items:flex-start;">
+        <p style="margin:0; color:var(--cream-soft); font-size:0.88rem; line-height:1.6;">+ vos autres recettes, ajoutées ici au fil des saisons.</p>
+      </div>
+    </div>
+    <p style="font-size:0.76rem; color:var(--cream-soft); margin-top:14px;">* Recettes et tarifs illustratifs, à remplacer par votre carte réelle.</p>
+  </section>
+
+  <section id="pourquoi">
+    <div class="section-head">
+      <div class="eyebrow">Pourquoi Healthy Baobab</div>
+      <h2>Ce qui vous distingue, mis en avant</h2>
+    </div>
+    <div class="why">
+      <div class="why-item"><div class="num">01</div><h3>Ingrédients locaux</h3><p>Fruits et baobab sourcés à Pointe-Noire, préparés le jour même — pas de longue conservation.</p></div>
+      <div class="why-item"><div class="num">02</div><h3>Fait sur commande</h3><p>Chaque smoothie est préparé à la commande, pas stocké à l'avance.</p></div>
+      <div class="why-item"><div class="num">03</div><h3>Pensé santé</h3><p>Peu ou pas de sucre ajouté, des recettes pensées pour l'équilibre autant que pour le goût.</p></div>
+    </div>
+  </section>
+
+  <section id="contact" style="border-bottom: none;">
+    <div class="contact-panel">
+      <div>
+        <h2>Prêt à recevoir vos commandes depuis un lien, pas seulement des messages ?</h2>
+        <p>Cette page est une proposition de vitrine pour Healthy Baobab — un endroit unique pour présenter la gamme et recevoir les commandes, en complément de vos réseaux sociaux.</p>
+      </div>
+      <div class="founder">
+        <span class="lbl">Fondateur</span>
+        <span class="name">Justice-Christ Ntari</span>
+        <span class="lbl" style="margin-top:10px;">Zone</span>
+        <span style="font-size:0.92rem;">Pointe-Noire, République du Congo</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="disclaimer">
+      Ceci est une maquette conceptuelle réalisée par <strong>Emmanuel Kongo</strong> à titre de proposition commerciale pour Healthy Baobab — pas un site en production. Recettes, tarifs et textes sont illustratifs et à remplacer par vos informations réelles.
+    </div>
+  </footer>
+
+</div>
+
+</body>
+</html>
