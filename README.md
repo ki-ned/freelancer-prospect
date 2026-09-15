@@ -18,10 +18,13 @@ freelancer-prospect/
 
 ## Prospects
 
-| Prospect | Secteur | Zone | Statut |
-| --- | --- | --- | --- |
-| [Healthy Baobab](prospects/healthy-baobab/) | Smoothies / baobab | Pointe-Noire | Proposé |
-| [Brandon Service Location](prospects/brandon-service-location/) | Location véhicules + chauffeur | Brazzaville | Proposé |
+Issus d'une étude de plateformes (LinkedIn, Crustdata) : score de qualification, décideur identifié, statut du canal de contact vérifié, et statut d'envoi du message de prospection.
+
+| Prospect | Score | Secteur | Zone | Statut |
+| --- | --- | --- | --- | --- |
+| [Healthy Baobab](prospects/healthy-baobab/) | 65/100 | Smoothies / baobab | Pointe-Noire | Message LinkedIn prêt, pas envoyé |
+| [Brandon Service Location](prospects/brandon-service-location/) | 76/100 | Location véhicules + chauffeur | Brazzaville | Message WhatsApp prêt, pas envoyé |
+| Apendy Express (non qualifié) | 68/100 | Livraison de gaz à domicile (300+ abonnés) | Brazzaville | Aucun contact vérifié — pas de maquette ni d'approche possible pour l'instant |
 
 ## Ajouter un nouveau prospect
 
