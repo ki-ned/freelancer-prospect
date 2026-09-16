@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<title>Audit commercial — Healthy Baobab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4; margin: 0; }
+  :root {
+    --bg: #faf6ea;
+    --bg-2: #f2ecdc;
+    --line: rgba(22,52,37,0.16);
+    --ink: #1c3326;
+    --ink-soft: rgba(28,51,38,0.66);
+    --mango: #ef8b3f;
+    --mango-deep: #d9691b;
+    --papaya: #e0562f;
+    --baobab: #b98a4e;
+    --card: #fffdf6;
+    --forest: #163425;
+    --forest-2: #1e4531;
+  }
+  * { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Karla", system-ui, sans-serif;
+    color: var(--ink);
+    background: #d8d4c4;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 { font-family: "Bricolage Grotesque", system-ui, sans-serif; font-weight: 800; margin: 0; letter-spacing: -0.01em; text-wrap: balance; }
+  p { margin: 0; }
+
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    position: relative;
+    padding: 16mm 16mm 20mm 16mm;
+    background: var(--bg);
+    background-image:
+      radial-gradient(420px 220px at 108% -6%, rgba(239,139,63,0.14), transparent 60%),
+      radial-gradient(360px 200px at -8% 12%, rgba(217,105,27,0.08), transparent 55%);
+    page-break-after: always;
+    break-after: page;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+  .page:last-of-type { page-break-after: auto; break-after: auto; }
+
+  .page-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 9mm; flex-shrink: 0; }
+  .brand { display: flex; align-items: center; gap: 8px; font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 12.5px; }
+  .brand-mark { width: 20px; height: 20px; border-radius: 50%; background: radial-gradient(circle at 32% 30%, var(--mango), var(--mango-deep) 70%); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .brand-mark svg { width: 12px; height: 12px; }
+  .doc-label { font-size: 9px; color: var(--ink-soft); letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; }
+
+  .page-footer {
+    margin-top: auto; padding-top: 8px; border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-size: 8px; color: var(--ink-soft); flex-shrink: 0; position: relative; z-index: 1;
+  }
+
+  .content { flex: 1; display: flex; flex-direction: column; position: relative; z-index: 1; }
+
+  .eyebrow { font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--mango-deep); margin-bottom: 6px; }
+  .section-title { font-size: 20px; margin-bottom: 3mm; }
+  .section-block { margin-bottom: 8mm; }
+  .section-block:last-child { margin-bottom: 0; }
+  .lede { color: var(--ink-soft); font-size: 11px; line-height: 1.65; max-width: 62ch; }
+
+  /* ---- organic blobs (fruit-evoking, no stock photos / no boxy icon tiles) ---- */
+  .blob { flex-shrink: 0; }
+  .blob.b1 { background: radial-gradient(circle at 32% 28%, #f6c15a, var(--mango)); border-radius: 62% 38% 55% 45% / 45% 52% 48% 55%; }
+  .blob.b2 { background: radial-gradient(circle at 32% 28%, #ef7a6b, var(--papaya)); border-radius: 46% 54% 63% 37% / 55% 45% 55% 45%; }
+  .blob.b3 { background: radial-gradient(circle at 32% 28%, #d8b27a, var(--baobab)); border-radius: 55% 45% 40% 60% / 60% 42% 58% 40%; }
+
+  /* ---- cover ---- */
+  .cover-content { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+  .cover-kicker { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--mango-deep); margin-bottom: 10px; }
+  .cover-title { font-size: 34px; line-height: 1.05; margin-bottom: 4px; }
+  .cover-sub { font-family: "Bricolage Grotesque", sans-serif; font-weight: 700; font-size: 13px; color: var(--ink-soft); margin-bottom: 10mm; }
+  .cover-summary { font-size: 12.5px; line-height: 1.7; max-width: 60ch; }
+  .cover-summary strong { font-weight: 700; }
+  .cover-stats { display: flex; gap: 22px; margin-top: 12mm; padding-top: 8mm; border-top: 1px solid var(--line); flex-wrap: wrap; }
+  .cover-stat b { display: block; font-family: "Bricolage Grotesque", sans-serif; font-size: 13.5px; font-weight: 800; }
+  .cover-stat span { font-size: 9.5px; color: var(--ink-soft); }
+  .cover-for { margin-top: auto; padding-top: 10mm; font-size: 10px; color: var(--ink-soft); position: relative; z-index: 1; }
+  .cover-for b { color: var(--ink); font-weight: 700; }
+
+  .cover-cluster { position: absolute; top: 20mm; right: -18mm; width: 130mm; height: 130mm; opacity: 0.9; }
+  .cover-cluster .blob { position: absolute; }
+  .cover-cluster .c1 { width: 70mm; height: 70mm; top: 0; right: 30mm; opacity: 0.5; }
+  .cover-cluster .c2 { width: 46mm; height: 46mm; top: 40mm; right: 0; opacity: 0.45; }
+  .cover-cluster .c3 { width: 34mm; height: 34mm; top: 80mm; right: 46mm; opacity: 0.4; }
+
+  /* ---- generic cards ---- */
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 6mm; }
+  .card-row { display: grid; grid-template-columns: 30px 1fr; gap: 4mm; padding-block: 4mm; border-top: 1px solid var(--line); align-items: flex-start; }
+  .card-row:first-child { border-top: none; padding-top: 0; }
+  .card-row .blob { width: 30px; height: 30px; margin-top: 2px; }
+  .card-row h3 { font-size: 12px; margin-bottom: 2px; }
+  .card-row p { font-size: 10.5px; color: var(--ink-soft); line-height: 1.55; }
+
+  .opp-card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 8mm; position: relative; overflow: hidden; }
+  .opp-card .blob-deco { position: absolute; width: 60mm; height: 60mm; right: -18mm; bottom: -18mm; opacity: 0.5; }
+  .opp-card h3 { font-size: 15px; margin-bottom: 3mm; max-width: 32ch; position: relative; z-index: 1; }
+  .opp-card p { font-size: 11.5px; line-height: 1.65; color: var(--ink-soft); max-width: 56ch; position: relative; z-index: 1; }
+
+  .impact-list { display: flex; flex-direction: column; gap: 4mm; }
+  .impact-item { display: flex; gap: 3mm; align-items: flex-start; }
+  .impact-item .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--mango); margin-top: 6px; flex-shrink: 0; }
+  .impact-item p { font-size: 11px; line-height: 1.65; color: var(--ink); max-width: 62ch; }
+
+  .deliverable-box { background: var(--forest); color: #f7f0dd; border-radius: 12px; padding: 8mm; position: relative; overflow: hidden; }
+  .deliverable-box .blob-deco { position: absolute; width: 55mm; height: 55mm; right: -14mm; top: -18mm; opacity: 0.35; }
+  .deliverable-box h3 { color: #fff; font-size: 14px; margin-bottom: 4mm; position: relative; z-index: 1; }
+  .deliverable-box p { font-size: 11px; color: rgba(247,240,221,0.75); line-height: 1.65; max-width: 56ch; position: relative; z-index: 1; }
+
+  .note-box { background: var(--card); border: 1px dashed var(--line); border-radius: 10px; padding: 6mm; }
+  .note-box p { font-size: 10.5px; color: var(--ink-soft); line-height: 1.6; }
+
+  /* ---- example page ---- */
+  .example-frame { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 4mm; max-height: 215mm; overflow: hidden; }
+  .example-desktop { max-height: 105mm; overflow: hidden; border-radius: 6px; border: 1px solid var(--line); }
+  .example-desktop img { width: 100%; display: block; }
+  .example-row { display: flex; justify-content: center; margin-top: 4mm; }
+  .example-mobile { width: 34mm; max-height: 74mm; overflow: hidden; border-radius: 12px; border: 1px solid var(--line); }
+  .example-mobile img { width: 100%; display: block; }
+  .example-caption { font-size: 9.5px; color: var(--ink-soft); margin-top: 4mm; text-align: center; }
+  .example-caption .link { font-size: 9px; }
+
+  /* ---- closing CTA ---- */
+  .cta-box { background: linear-gradient(155deg, var(--mango), var(--papaya)); border-radius: 14px; padding: 9mm; margin-top: auto; position: relative; z-index: 1; }
+  .cta-box h3 { font-size: 17px; color: #2a1305; margin-bottom: 3mm; }
+  .cta-box p { font-size: 11.5px; color: #3d1e08; line-height: 1.55; max-width: 50ch; }
+  .cta-contacts { display: flex; gap: 10mm; margin-top: 6mm; flex-wrap: wrap; }
+  .cta-contact .lbl { font-size: 8.5px; text-transform: uppercase; letter-spacing: 0.06em; color: #3d1e08; opacity: 0.75; }
+  .cta-contact .val { font-family: "Bricolage Grotesque", sans-serif; font-size: 12px; font-weight: 700; color: #2a1305; margin-top: 2px; }
+</style>
+</head>
+<body>
+
+<!-- ============ PAGE 1 — COVER / EXECUTIVE SUMMARY ============ -->
+<div class="page">
+  <div class="page-header">
+    <div class="brand">
+      <span class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#241505" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c4-2 7-6 7-11a7 7 0 0 0-14 0c0 5 3 9 7 11z"/><path d="M12 10v7"/></svg>
+      </span>
+      Healthy Baobab
+    </div>
+    <div class="doc-label">Audit commercial</div>
+  </div>
+
+  <div class="cover-cluster">
+    <div class="blob b1 c1"></div>
+    <div class="blob b2 c2"></div>
+    <div class="blob b3 c3"></div>
+  </div>
+
+  <div class="cover-content">
+    <div class="cover-kicker">Audit commercial — Septembre 2026</div>
+    <h1 class="cover-title">Healthy Baobab</h1>
+    <div class="cover-sub">Smoothies et produits sains — Pointe-Noire</div>
+    <p class="cover-summary">
+      Healthy Baobab s'appuie sur un positionnement rare — les fruits locaux et le baobab, un ingrédient identitaire que peu de marques concurrentes exploitent — porté par une marque déjà nommée et un fondateur actif en ligne. <strong>L'opportunité identifiée</strong> : ce positionnement mérite un endroit permanent pour exister au-delà des réseaux sociaux, là où chaque publication disparaît du fil au bout de 24 à 48 heures. <strong>La proposition</strong> : une page produit, pensée pour être partagée en un seul lien.
+    </p>
+    <div class="cover-stats">
+      <div class="cover-stat"><b>Fruits locaux + baobab</b><span>Positionnement</span></div>
+      <div class="cover-stat"><b>LinkedIn actif</b><span>Présence en ligne</span></div>
+      <div class="cover-stat"><b>Message direct</b><span>Commandes aujourd'hui</span></div>
+    </div>
+  </div>
+
+  <div class="cover-for">Préparé à l'attention de <b>Justice-Christ Ntari</b>, fondateur de Healthy Baobab.</div>
+
+  <div class="page-footer">
+    <span>Document préparé par Emmanuel Kongo — proposition commerciale, non contractuelle.</span>
+    <span>1 / 6</span>
+  </div>
+</div>
+
+<!-- ============ PAGE 2 — SITUATION ACTUELLE + POINTS POSITIFS ============ -->
+<div class="page">
+  <div class="page-header">
+    <div class="brand">
+      <span class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#241505" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c4-2 7-6 7-11a7 7 0 0 0-14 0c0 5 3 9 7 11z"/><path d="M12 10v7"/></svg>
+      </span>
+      Healthy Baobab
+    </div>
+    <div class="doc-label">Audit commercial</div>
+  </div>
+
+  <div class="content">
+    <div class="section-block">
+      <div class="eyebrow">Situation actuelle</div>
+      <h2 class="section-title">Une marque qui existe déjà, à sa façon</h2>
+      <p class="lede" style="margin-top:4mm; max-width:none;">
+        Healthy Baobab est une marque de smoothies et produits sains à base de fruits locaux et de baobab, basée à Pointe-Noire. Aujourd'hui, la marque existe à travers le profil LinkedIn de son fondateur, ainsi que le réseau et le bouche-à-oreille que cela permet. Ce positionnement mérite un endroit permanent où exister au-delà des réseaux sociaux : un lien vers lequel renvoyer directement une personne qui découvre la marque.
+      </p>
+    </div>
+
+    <div class="section-block">
+      <div class="eyebrow">Points positifs</div>
+      <h2 class="section-title">Ce qui distingue déjà Healthy Baobab</h2>
+      <div class="card" style="margin-top:5mm;">
+        <div class="card-row">
+          <div class="blob b1"></div>
+          <div>
+            <h3>Un positionnement rare</h3>
+            <p>Les fruits locaux et le baobab, un ingrédient identitaire que peu de marques concurrentes exploitent aujourd'hui.</p>
+          </div>
+        </div>
+        <div class="card-row">
+          <div class="blob b2"></div>
+          <div>
+            <h3>Une marque déjà nommée</h3>
+            <p>Healthy Baobab est un nom identifiable, posé, qui n'a pas besoin d'être réinventé pour être mis en avant.</p>
+          </div>
+        </div>
+        <div class="card-row">
+          <div class="blob b3"></div>
+          <div>
+            <h3>Un fondateur actif en ligne</h3>
+            <p>Justice-Christ Ntari est déjà visible et actif sur LinkedIn : une base solide à prolonger plutôt qu'un point de départ à créer.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>Document préparé par Emmanuel Kongo — proposition commerciale, non contractuelle.</span>
+    <span>2 / 6</span>
+  </div>
+</div>
+
+<!-- ============ PAGE 3 — OPPORTUNITÉ IDENTIFIÉE + IMPACT ============ -->
+<div class="page">
+  <div class="page-header">
+    <div class="brand">
+      <span class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#241505" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c4-2 7-6 7-11a7 7 0 0 0-14 0c0 5 3 9 7 11z"/><path d="M12 10v7"/></svg>
+      </span>
+      Healthy Baobab
+    </div>
+    <div class="doc-label">Audit commercial</div>
+  </div>
+
+  <div class="content">
+    <div class="section-block">
+      <div class="eyebrow">Opportunité identifiée</div>
+      <h2 class="section-title">Un endroit permanent où exister</h2>
+      <div class="opp-card" style="margin-top:5mm;">
+        <div class="blob b1 blob-deco"></div>
+        <h3>Une page produit, permanente et partageable</h3>
+        <p>Aujourd'hui, chaque commande dépend d'un message échangé individuellement, et chaque publication sur les réseaux sociaux disparaît du fil au bout de 24 à 48 heures. Il n'existe aucun endroit permanent où renvoyer quelqu'un qui demande « c'est quoi Healthy Baobab ? ».</p>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <div class="eyebrow">Impact attendu</div>
+      <h2 class="section-title">Ce que ça change concrètement</h2>
+      <div class="impact-list" style="margin-top:5mm;">
+        <div class="impact-item"><span class="dot"></span><p>Un lien unique réduit le temps passé à répéter les mêmes informations — la gamme, les prix, la zone de livraison — à chaque nouveau client.</p></div>
+        <div class="impact-item"><span class="dot"></span><p>Il devient aussi plus facile à partager de bouche-à-oreille (statut WhatsApp, story Instagram, entre amis) qu'un numéro de téléphone.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>Document préparé par Emmanuel Kongo — proposition commerciale, non contractuelle.</span>
+    <span>3 / 6</span>
+  </div>
+</div>
+
+<!-- ============ PAGE 4 — SOLUTION PROPOSÉE ============ -->
+<div class="page">
+  <div class="page-header">
+    <div class="brand">
+      <span class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#241505" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c4-2 7-6 7-11a7 7 0 0 0-14 0c0 5 3 9 7 11z"/><path d="M12 10v7"/></svg>
+      </span>
+      Healthy Baobab
+    </div>
+    <div class="doc-label">Audit commercial</div>
+  </div>
+
+  <div class="content">
+    <div class="eyebrow">Solution proposée</div>
+    <h2 class="section-title">Une page produit, pensée pour durer</h2>
+    <div class="deliverable-box" style="margin-top:6mm;">
+      <div class="blob b2 blob-deco"></div>
+      <h3>Page produit, une page</h3>
+      <p>Présentation de la marque, gamme de smoothies, et comment commander — pensée pour être partagée en un lien unique, et mise à jour facilement au fil des saisons.</p>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>Document préparé par Emmanuel Kongo — proposition commerciale, non contractuelle.</span>
+    <span>4 / 6</span>
+  </div>
+</div>
+
+<!-- ============ PAGE 5 — EXEMPLE CONCRET ============ -->
+<div class="page">
+  <div class="page-header">
+    <div class="brand">
+      <span class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#241505" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c4-2 7-6 7-11a7 7 0 0 0-14 0c0 5 3 9 7 11z"/><path d="M12 10v7"/></svg>
+      </span>
+      Healthy Baobab
+    </div>
+    <div class="doc-label">Audit commercial</div>
+  </div>
+
+  <div class="content">
+    <div class="eyebrow">Exemple concret</div>
+    <h2 class="section-title">Un premier aperçu de la page produit</h2>
+
+    <div class="example-frame" style="margin-top:6mm;">
+      <div class="example-desktop">
+        <img src="assets/preview-desktop.png" alt="Aperçu desktop de la maquette">
+      </div>
+      <div class="example-row">
+        <div class="example-mobile">
+          <img src="assets/preview-mobile.png" alt="Aperçu mobile de la maquette">
+        </div>
+      </div>
+    </div>
+    <p class="example-caption">Exemple non officiel, recettes et tarifs à adapter avec votre carte réelle.<br><span class="link">claude.ai/artifact/FgPae64ajCRebK8sL28Lyy</span></p>
+  </div>
+
+  <div class="page-footer">
+    <span>Document préparé par Emmanuel Kongo — proposition commerciale, non contractuelle.</span>
+    <span>5 / 6</span>
+  </div>
+</div>
+
+<!-- ============ PAGE 6 — PRIORISATION + PROCHAINE ÉTAPE ============ -->
+<div class="page">
+  <div class="page-header">
+    <div class="brand">
+      <span class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#241505" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c4-2 7-6 7-11a7 7 0 0 0-14 0c0 5 3 9 7 11z"/><path d="M12 10v7"/></svg>
+      </span>
+      Healthy Baobab
+    </div>
+    <div class="doc-label">Audit commercial</div>
+  </div>
+
+  <div class="content">
+    <div class="section-block">
+      <div class="eyebrow">Priorisation</div>
+      <h2 class="section-title">Une seule étape à la fois</h2>
+      <div class="note-box" style="margin-top:5mm;">
+        <p>Une seule opportunité ici, donc pas de hiérarchisation nécessaire à ce stade. La page pourra évoluer plus tard — par exemple avec une prise de commande directement en ligne — si le besoin s'en fait sentir avec le temps.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-box">
+    <h3>Prochaine étape</h3>
+    <p>10 minutes pour vous montrer comment ça marche, sans engagement.</p>
+    <div class="cta-contacts">
+      <div class="cta-contact"><div class="lbl">Emmanuel Kongo — développeur freelance</div></div>
+    </div>
+    <div class="cta-contacts">
+      <div class="cta-contact"><div class="lbl">WhatsApp / Téléphone</div><div class="val">+242 05 004 47 96</div></div>
+      <div class="cta-contact"><div class="lbl">Email</div><div class="val">kined.dev@gmail.com</div></div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>Document préparé par Emmanuel Kongo — proposition commerciale, non contractuelle.</span>
+    <span>6 / 6</span>
+  </div>
+</div>
+
+</body>
+</html>
