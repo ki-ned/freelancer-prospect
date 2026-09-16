@@ -13,7 +13,10 @@ freelancer-prospect/
 │       └── README.md           # fiche : secteur, ville, statut, contact
 ├── templates/
 │   └── proposal-template.html  # squelette de départ pour une nouvelle maquette
-└── docs-marketing/              # supports non-HTML (PDF, decks, assets de marque…)
+├── docs-marketing/              # supports non-HTML (PDF, decks, assets de marque…)
+│   └── <slug-prospect>/        # ex. audit commercial PDF + sa source HTML éditable
+└── scripts/
+    └── render-pdf.js           # rendu HTML → PDF sans marges parasites (voir scripts/README.md)
 ```
 
 ## Prospects
@@ -22,8 +25,8 @@ Issus d'une étude de plateformes (LinkedIn, Crustdata) : score de qualification
 
 | Prospect | Score | Secteur | Zone | Statut |
 | --- | --- | --- | --- | --- |
-| [Healthy Baobab](prospects/healthy-baobab/) | 65/100 | Smoothies / baobab | Pointe-Noire | Message LinkedIn prêt, pas envoyé |
-| [Brandon Service Location](prospects/brandon-service-location/) | 76/100 | Location véhicules + chauffeur | Brazzaville | Message WhatsApp prêt, pas envoyé |
+| [Healthy Baobab](prospects/healthy-baobab/) | 65/100 | Smoothies / baobab | Pointe-Noire | Message LinkedIn prêt, pas envoyé — [audit commercial](docs-marketing/healthy-baobab/healthy-baobab-audit-commercial.pdf) |
+| [Brandon Service Location](prospects/brandon-service-location/) | 76/100 | Location véhicules + chauffeur | Brazzaville | Message WhatsApp prêt, pas envoyé — [audit commercial](docs-marketing/brandon-service-location/brandon-service-location-audit-commercial.pdf) |
 | Apendy Express (non qualifié) | 68/100 | Livraison de gaz à domicile (300+ abonnés) | Brazzaville | Aucun contact vérifié — pas de maquette ni d'approche possible pour l'instant |
 
 ## Ajouter un nouveau prospect
