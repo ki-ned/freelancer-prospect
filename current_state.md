@@ -22,7 +22,7 @@ Skills installés pour cette initiative : `prototype` (emilkowalski), `research`
 ## Infrastructure
 
 - **Git local** : historique complet depuis la création du repo (voir `git log`).
-- **GitHub** : le dépôt distant vient d'être créé par l'utilisateur (2026-09-19). **Aucun push n'a encore été fait depuis une session Claude.** GitHub Pages pas encore confirmé activé.
+- **GitHub** : le dépôt distant (`ki-ned/freelancer-prospect`, public) est créé et **`main` local est synchronisé avec `origin/main`**. **GitHub Pages activé et confirmé en ligne** (2026-09-19) : `https://ki-ned.github.io/freelancer-prospect/` sert la galerie racine (Healthy Baobab + Brandon Service Location). `gh` CLI installé par l'utilisateur mais pas encore détecté dans le PATH de cette session — à revérifier une prochaine fois après redémarrage du terminal.
 - **PDF** : `scripts/render-pdf.js` (puppeteer-core) est la méthode correcte — ne pas utiliser `agent-browser pdf` (bug de marges, voir CLAUDE.md).
 
 ## Prochaines étapes

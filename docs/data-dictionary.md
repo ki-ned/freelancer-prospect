@@ -1,27 +1,42 @@
 # Data dictionary
 
-**Statut : à compléter au fil de l'eau (pas de base de données réelle dans ce repo — voir note ci-dessous), ou via l'interview de `help.txt` si vous préférez cadrer ça dès maintenant.**
+**Statut : complété (interview du 2026-09-19).** Convention de nommage : snake_case pour tout champ documenté ici.
 
 ## Pourquoi ce doc est différent ici
 
-Ce repo est un site statique (HTML/CSS/PDF), pas une app avec une vraie base de données. Il n'y a donc pas de tables SQL à documenter aujourd'hui. Deux structures de données méritent quand même d'être suivies ici :
+Ce repo est un site statique (HTML/CSS/PDF), pas une app avec une vraie base de données. Il n'y a donc pas de tables SQL à documenter. Deux structures de données méritent quand même d'être suivies ici.
 
-### 1. Champs "prospect" (déjà en usage, informel)
+### 1. Champs "prospect" (`prospects/<slug>/README.md`)
 
-Chaque `prospects/<slug>/README.md` documente actuellement, en prose, les mêmes champs pour chaque prospect :
+Chaque fiche prospect documente en prose les mêmes champs. Schéma informel, en snake_case :
 
-- `secteur`, `zone`, `score` (sur 100), `décideur` (nom + poste), `contact_vérifié` (canal + valeur), `statut_message` (rédigé / envoyé / relancé), `date`.
+- `secteur` — secteur d'activité (ex. "restauration", "location de véhicules")
+- `zone` — ville/quartier (ex. "Pointe-Noire", "Brazzaville")
+- `score` — score de qualification sur 100
+- `decideur_nom` — nom du décideur identifié
+- `decideur_poste` — poste/rôle du décideur
+- `contact_canal` — canal de contact vérifié (`linkedin`, `whatsapp`, `email`, etc.)
+- `contact_valeur` — identifiant du contact sur ce canal
+- `statut_message` — `redige` / `envoye` / `relance`
+- `date` — date de dernière mise à jour du statut
 
-Si ça devient pénible à maintenir en Markdown libre, ce serait le moment de formaliser un vrai schéma (ex. un fichier `prospects.json` ou `.csv`) — à trancher pendant l'interview si vous pensez que ça vaut le coup.
+Décision : ce schéma reste en Markdown libre par prospect (pas de `prospects.json`/`.csv` séparé pour l'instant) — le volume actuel (4 prospects) ne justifie pas la formalisation. À reconsidérer si le nombre de prospects suivis rend la synthèse manuelle pénible.
 
 ### 2. Modèles de données fictifs des prototypes "gestion" (famille B)
 
-Chaque prototype multi-écrans (`templates/gestion-*`) simule un petit jeu de données fictif pour paraître réaliste (ex. `gestion-caisse` aura des "produits" et des "transactions" factices). **Documenter ici le modèle de données fictif de chaque prototype au moment où il est construit**, en snake_case comme demandé dans `help.txt`, par exemple :
+Chaque prototype multi-écrans (`templates/gestion-*`) simule un petit jeu de données fictif pour paraître réaliste. **Documenter ici le modèle de données fictif de chaque prototype au moment où il est construit**, en snake_case.
 
-```
-## gestion-caisse (exemple à remplir lors de la construction)
-- produits: id, nom, prix, categorie
-- transactions: id, date, produits[], total, mode_paiement
+Contrainte fixée pendant l'interview (Round 4) : ces données restent des fixtures statiques codées en dur dans le HTML/JS de chaque prototype — pas de backend, pas de persistance réelle (voir `docs/integrations.md`).
+
+#### gestion-caisse (Phase 1 — pas encore construit)
+
+À remplir à la construction. Champs pressentis d'après le phasage de `docs/feature-backlog.md` (écran caisse + historique des ventes + résumé de journée) :
+
+```text
+produits: id, nom, prix, categorie
+transactions: id, date, produits[], total, mode_paiement
 ```
 
-(Section vide pour l'instant — sera remplie au fur et à mesure de la Phase 1/2 de `feature-backlog.md`.)
+#### Autres prototypes (Phase 2/3 — pas encore construits)
+
+Sections à ajouter au moment de la construction de chacun : `gestion-ecole`, `gestion-auberge`, `gestion-comptable`, `gestion-restaurant`, `agence-livraison`, `noki-clone`.
