@@ -2,18 +2,23 @@
 
 Maquettes, documents et éléments marketing utilisés pour démarcher des prospects — publiés en pages statiques via GitHub Pages.
 
+Pour travailler sur ce repo (humain ou Claude Code) : lire [CLAUDE.md](CLAUDE.md) (conventions) et [current_state.md](current_state.md) (état réel à jour) avant de commencer.
+
 ## Structure
 
 ```
 freelancer-prospect/
+├── CLAUDE.md                   # conventions du repo pour Claude Code
+├── current_state.md            # état réel du projet, à jour
+├── docs/                       # pilotage du projet (scope, bugs connus…) — voir docs/README.md
 ├── index.html                  # page galerie (liste des maquettes)
-├── prospects/                  # une maquette par prospect
+├── prospects/                  # une maquette par prospect réel nommé
 │   └── <slug-prospect>/
 │       ├── index.html          # la maquette (page HTML autonome)
 │       └── README.md           # fiche : secteur, ville, statut, contact
-├── templates/
+├── templates/                   # maquettes génériques réutilisables (pas liées à un prospect précis)
 │   └── proposal-template.html  # squelette de départ pour une nouvelle maquette
-├── docs-marketing/              # supports non-HTML (PDF, decks, assets de marque…)
+├── docs-marketing/              # livrables prospects non-HTML (PDF d'audit, assets…)
 │   └── <slug-prospect>/        # ex. audit commercial PDF + sa source HTML éditable
 └── scripts/
     └── render-pdf.js           # rendu HTML → PDF sans marges parasites (voir scripts/README.md)
