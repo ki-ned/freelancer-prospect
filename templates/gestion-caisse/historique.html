@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<title>Historique des ventes — Épicerie du Coin</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<script>
+  try {
+    if (localStorage.getItem('gc-theme') === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+  } catch (e) {}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #171b23;
+    --ink-soft: rgba(23,27,35,0.6);
+    --paper: #f4f5f7;
+    --paper-raised: #ffffff;
+    --line: rgba(23,27,35,0.12);
+    --blue: #2f5fd6;
+    --blue-deep: #23439c;
+    --blue-tint: #e4ebfc;
+    --good: #2f7a4f;
+    --good-tint: #e3f3e8;
+    --mm: #d9731f;
+    --mm-tint: #fbe9d9;
+  }
+  :root[data-theme="dark"] {
+    --ink: #eceef2;
+    --ink-soft: rgba(236,238,242,0.62);
+    --paper: #14161c;
+    --paper-raised: #1c1f27;
+    --line: rgba(236,238,242,0.12);
+    --blue: #6f93ea;
+    --blue-deep: #8fabf0;
+    --blue-tint: #1c2740;
+    --good: #5cb586;
+    --good-tint: #16301f;
+    --mm: #e8935a;
+    --mm-tint: #3a2415;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Inter", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 { font-family: "Space Grotesk", system-ui, sans-serif; font-weight: 600; margin: 0; letter-spacing: -0.01em; }
+  a { color: inherit; }
+  button { font-family: inherit; }
+  ::selection { background: var(--blue); color: #fff; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--blue-deep); outline-offset: 2px; border-radius: 4px; }
+  .tabular { font-variant-numeric: tabular-nums; }
+
+  /* ---- shell ---- */
+  .shell { display: flex; min-height: 100vh; }
+  .sidebar {
+    width: 232px; flex-shrink: 0; background: var(--paper-raised); border-right: 1px solid var(--line);
+    display: flex; flex-direction: column; padding: 20px 14px; position: sticky; top: 0; height: 100vh;
+  }
+  .sidebar-brand { display: flex; align-items: center; gap: 10px; padding: 6px 8px 22px; }
+  .sidebar-brand .mark { width: 32px; height: 32px; border-radius: 9px; background: var(--blue); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .sidebar-brand .mark svg { width: 17px; height: 17px; }
+  .sidebar-brand .name { font-family: "Space Grotesk", sans-serif; font-weight: 600; font-size: 0.95rem; line-height: 1.2; }
+  .sidebar-brand .tag { font-size: 0.72rem; color: var(--ink-soft); }
+  .sidebar-nav { display: flex; flex-direction: column; gap: 2px; }
+  .sidebar-nav a {
+    display: flex; align-items: center; gap: 11px; padding: 10px 12px; border-radius: 9px;
+    font-size: 0.88rem; font-weight: 500; text-decoration: none; color: var(--ink-soft);
+    transition: background .15s ease, color .15s ease;
+  }
+  .sidebar-nav a svg { width: 17px; height: 17px; flex-shrink: 0; }
+  .sidebar-nav a[aria-current="page"] { background: var(--blue-tint); color: var(--blue-deep); font-weight: 600; }
+  @media (hover: hover) and (pointer: fine) {
+    .sidebar-nav a:not([aria-current="page"]):hover { background: rgba(127,127,127,0.08); color: var(--ink); }
+  }
+  .sidebar-foot { margin-top: auto; display: flex; align-items: center; justify-content: space-between; padding: 10px 8px 4px; }
+  .demo-tag { font-size: 0.7rem; font-weight: 600; color: var(--ink-soft); border: 1px dashed var(--line); border-radius: 999px; padding: 4px 10px; }
+  .theme-toggle {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+    border: 1px solid var(--line); background: transparent; color: var(--ink); cursor: pointer;
+    transition: border-color .15s ease, background .15s ease;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .theme-toggle:hover { border-color: var(--ink-soft); background: rgba(127,127,127,0.1); }
+  }
+  .theme-toggle svg { width: 15px; height: 15px; }
+  .theme-toggle .icon-sun { display: none; }
+  :root[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+  :root[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+
+  .main { flex: 1; min-width: 0; padding: 26px 30px 40px; }
+  .page-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 22px; flex-wrap: wrap; }
+  .page-head h1 { font-size: 1.5rem; }
+  .page-head .sub { font-size: 0.86rem; color: var(--ink-soft); margin-top: 4px; }
+
+  /* ---- table ---- */
+  .table-card { background: var(--paper-raised); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+  table { width: 100%; border-collapse: collapse; }
+  thead th {
+    text-align: left; font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-soft);
+    font-weight: 600; padding: 13px 18px; border-bottom: 1px solid var(--line);
+  }
+  thead th.num, tbody td.num { text-align: right; }
+  tbody td { padding: 13px 18px; border-bottom: 1px solid var(--line); font-size: 0.9rem; }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody td.amt { font-weight: 600; }
+  .pill {
+    display: inline-flex; align-items: center; gap: 6px; font-size: 0.78rem; font-weight: 600;
+    padding: 4px 10px; border-radius: 999px;
+  }
+  .pill .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+  .pill.especes { background: var(--good-tint); color: var(--good); }
+  .pill.carte { background: var(--blue-tint); color: var(--blue-deep); }
+  .pill.mobile { background: var(--mm-tint); color: var(--mm); }
+  .table-foot { display: flex; justify-content: flex-end; gap: 28px; padding: 14px 18px; border-top: 1px solid var(--line); }
+  .table-foot .item { text-align: right; }
+  .table-foot .lbl { font-size: 0.76rem; color: var(--ink-soft); }
+  .table-foot .val { font-family: "Space Grotesk", sans-serif; font-size: 1.05rem; font-weight: 600; }
+
+  footer { padding: 20px 4px 4px; }
+  footer .disclaimer {
+    font-size: 0.76rem; color: var(--ink-soft); line-height: 1.55;
+    border: 1px dashed var(--line); border-radius: 12px; padding: 12px 16px;
+  }
+
+  @media (max-width: 720px) {
+    .shell { flex-direction: column; }
+    .sidebar { width: 100%; height: auto; position: static; flex-direction: row; align-items: center; padding: 8px 10px; gap: 6px; }
+    .sidebar-brand { padding: 2px 4px 2px 0; flex-shrink: 0; }
+    .sidebar-brand .tag { display: none; }
+    .sidebar-nav { flex-direction: row; gap: 4px; flex: 1; justify-content: center; }
+    .sidebar-nav a { flex-direction: column; gap: 3px; padding: 7px 8px; font-size: 0.66rem; text-align: center; }
+    .sidebar-foot { margin-top: 0; margin-left: 0; flex-shrink: 0; gap: 6px; }
+    .demo-tag { display: none; }
+    .main { padding: 20px 16px 32px; }
+    .table-card { overflow-x: auto; }
+    table { min-width: 480px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <span class="mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h18l-1.5 9.5a2 2 0 0 1-2 1.5H6.5a2 2 0 0 1-2-1.5L3 9z"/><path d="M8 9V6a4 4 0 0 1 8 0v3"/></svg>
+      </span>
+      <div>
+        <div class="name">Épicerie du Coin</div>
+        <div class="tag">Espace gestion</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="index.html" aria-label="Caisse">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="13" rx="2"/><path d="M2 10h20"/><path d="M7 15h4"/></svg>
+        <span class="label">Caisse</span>
+      </a>
+      <a href="historique.html" aria-current="page" aria-label="Historique">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>
+        <span class="label">Historique</span>
+      </a>
+      <a href="resume.html" aria-label="Résumé du jour">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M12 20V4M20 20v-7"/></svg>
+        <span class="label">Résumé du jour</span>
+      </a>
+    </nav>
+    <div class="sidebar-foot">
+      <span class="demo-tag">Démo</span>
+      <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Basculer le mode sombre">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2.5M12 19v2.5M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M2.5 12H5M19 12h2.5M4.6 19.4l1.8-1.8M17.6 6.4l1.8-1.8"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg>
+      </button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="page-head">
+      <div>
+        <h1>Historique des ventes</h1>
+        <div class="sub">Journée du 17 mars 2026 — 11 transactions</div>
+      </div>
+    </div>
+
+    <div class="table-card">
+      <table>
+        <thead>
+          <tr>
+            <th>Heure</th>
+            <th>Ticket</th>
+            <th>Mode de paiement</th>
+            <th class="num">Montant</th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+      <div class="table-foot">
+        <div class="item"><div class="lbl">Transactions</div><div class="val tabular" id="foot-count"></div></div>
+        <div class="item"><div class="lbl">Total encaissé</div><div class="val tabular" id="foot-total"></div></div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="disclaimer">
+        Maquette de démonstration réalisée par <strong>Kongo Nancy Emmanuel</strong>, à titre d'exemple pour un commerce. Il ne s'agit pas d'un système en production : produits, ventes et montants sont fictifs.
+      </div>
+    </footer>
+  </main>
+</div>
+
+<script>
+  var TRANSACTIONS = [
+    { id: '#001', heure: '08:15', montant: 2300, mode_paiement: 'especes' },
+    { id: '#002', heure: '08:47', montant: 4100, mode_paiement: 'mobile' },
+    { id: '#003', heure: '09:12', montant: 1500, mode_paiement: 'especes' },
+    { id: '#004', heure: '09:58', montant: 6200, mode_paiement: 'carte' },
+    { id: '#005', heure: '10:23', montant: 900, mode_paiement: 'mobile' },
+    { id: '#006', heure: '11:05', montant: 3400, mode_paiement: 'especes' },
+    { id: '#007', heure: '11:41', montant: 2000, mode_paiement: 'mobile' },
+    { id: '#008', heure: '12:30', montant: 5600, mode_paiement: 'especes' },
+    { id: '#009', heure: '13:15', montant: 1800, mode_paiement: 'carte' },
+    { id: '#010', heure: '13:52', montant: 3200, mode_paiement: 'mobile' },
+    { id: '#011', heure: '14:20', montant: 1100, mode_paiement: 'especes' }
+  ];
+
+  var LABELS = { especes: 'Espèces', carte: 'Carte', mobile: 'Mobile Money' };
+
+  function formatXAF(n) {
+    return n.toLocaleString('fr-FR') + ' XAF';
+  }
+
+  function renderRows() {
+    var body = document.getElementById('rows');
+    var html = '';
+    TRANSACTIONS.forEach(function (t) {
+      html += '<tr>' +
+        '<td class="tabular">' + t.heure + '</td>' +
+        '<td>' + t.id + '</td>' +
+        '<td><span class="pill ' + t.mode_paiement + '"><span class="dot"></span>' + LABELS[t.mode_paiement] + '</span></td>' +
+        '<td class="num amt tabular">' + formatXAF(t.montant) + '</td>' +
+        '</tr>';
+    });
+    body.innerHTML = html;
+
+    var total = TRANSACTIONS.reduce(function (sum, t) { return sum + t.montant; }, 0);
+    document.getElementById('foot-count').textContent = TRANSACTIONS.length;
+    document.getElementById('foot-total').textContent = formatXAF(total);
+  }
+
+  renderRows();
+
+  (function () {
+    var btn = document.getElementById('theme-toggle');
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+      var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      if (isDark) {
+        document.documentElement.removeAttribute('data-theme');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+      try { localStorage.setItem('gc-theme', isDark ? 'light' : 'dark'); } catch (e) {}
+    });
+  })();
+</script>
+
+</body>
+</html>

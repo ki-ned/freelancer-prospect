@@ -28,14 +28,19 @@ Chaque prototype multi-écrans (`templates/gestion-*`) simule un petit jeu de do
 
 Contrainte fixée pendant l'interview (Round 4) : ces données restent des fixtures statiques codées en dur dans le HTML/JS de chaque prototype — pas de backend, pas de persistance réelle (voir `docs/integrations.md`).
 
-#### gestion-caisse (Phase 1 — pas encore construit)
+#### gestion-caisse (Phase 1 — livré le 2026-09-20)
 
-À remplir à la construction. Champs pressentis d'après le phasage de `docs/feature-backlog.md` (écran caisse + historique des ventes + résumé de journée) :
+Pilote "Épicerie du Coin" (épicerie de quartier fictive), 3 écrans (`index.html` caisse, `historique.html`, `resume.html`), données codées en dur en JS dans chaque page (dupliquées entre pages, cohérent avec l'absence de build) :
 
 ```text
 produits: id, nom, prix, categorie
-transactions: id, date, produits[], total, mode_paiement
+  categorie ∈ { Boissons, Épicerie, Hygiène, Recharges }
+
+transactions: id, heure, montant, mode_paiement
+  mode_paiement ∈ { especes, carte, mobile }
 ```
+
+Le ticket en cours sur l'écran caisse (panier client, JS pur, non persisté) associe des `produits.id` à une quantité — pas de champ `date` sur les transactions (une seule journée fictive simulée par écran, `17 mars 2026`).
 
 #### Autres prototypes (Phase 2/3 — pas encore construits)
 

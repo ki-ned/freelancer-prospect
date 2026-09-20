@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<title>Caisse — Épicerie du Coin</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<script>
+  try {
+    if (localStorage.getItem('gc-theme') === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+  } catch (e) {}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #171b23;
+    --ink-soft: rgba(23,27,35,0.6);
+    --paper: #f4f5f7;
+    --paper-raised: #ffffff;
+    --line: rgba(23,27,35,0.12);
+    --blue: #2f5fd6;
+    --blue-deep: #23439c;
+    --blue-tint: #e4ebfc;
+    --good: #2f7a4f;
+    --good-tint: #e3f3e8;
+    --mm: #d9731f;
+    --mm-tint: #fbe9d9;
+  }
+  :root[data-theme="dark"] {
+    --ink: #eceef2;
+    --ink-soft: rgba(236,238,242,0.62);
+    --paper: #14161c;
+    --paper-raised: #1c1f27;
+    --line: rgba(236,238,242,0.12);
+    --blue: #6f93ea;
+    --blue-deep: #8fabf0;
+    --blue-tint: #1c2740;
+    --good: #5cb586;
+    --good-tint: #16301f;
+    --mm: #e8935a;
+    --mm-tint: #3a2415;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Inter", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 { font-family: "Space Grotesk", system-ui, sans-serif; font-weight: 600; margin: 0; letter-spacing: -0.01em; }
+  a { color: inherit; }
+  button { font-family: inherit; }
+  ::selection { background: var(--blue); color: #fff; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--blue-deep); outline-offset: 2px; border-radius: 4px; }
+  .tabular { font-variant-numeric: tabular-nums; }
+
+  /* ---- shell ---- */
+  .shell { display: flex; min-height: 100vh; }
+  .sidebar {
+    width: 232px; flex-shrink: 0; background: var(--paper-raised); border-right: 1px solid var(--line);
+    display: flex; flex-direction: column; padding: 20px 14px; position: sticky; top: 0; height: 100vh;
+  }
+  .sidebar-brand { display: flex; align-items: center; gap: 10px; padding: 6px 8px 22px; }
+  .sidebar-brand .mark { width: 32px; height: 32px; border-radius: 9px; background: var(--blue); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .sidebar-brand .mark svg { width: 17px; height: 17px; }
+  .sidebar-brand .name { font-family: "Space Grotesk", sans-serif; font-weight: 600; font-size: 0.95rem; line-height: 1.2; }
+  .sidebar-brand .tag { font-size: 0.72rem; color: var(--ink-soft); }
+  .sidebar-nav { display: flex; flex-direction: column; gap: 2px; }
+  .sidebar-nav a {
+    display: flex; align-items: center; gap: 11px; padding: 10px 12px; border-radius: 9px;
+    font-size: 0.88rem; font-weight: 500; text-decoration: none; color: var(--ink-soft);
+    transition: background .15s ease, color .15s ease;
+  }
+  .sidebar-nav a svg { width: 17px; height: 17px; flex-shrink: 0; }
+  .sidebar-nav a[aria-current="page"] { background: var(--blue-tint); color: var(--blue-deep); font-weight: 600; }
+  @media (hover: hover) and (pointer: fine) {
+    .sidebar-nav a:not([aria-current="page"]):hover { background: rgba(127,127,127,0.08); color: var(--ink); }
+  }
+  .sidebar-foot { margin-top: auto; display: flex; align-items: center; justify-content: space-between; padding: 10px 8px 4px; }
+  .demo-tag { font-size: 0.7rem; font-weight: 600; color: var(--ink-soft); border: 1px dashed var(--line); border-radius: 999px; padding: 4px 10px; }
+  .theme-toggle {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+    border: 1px solid var(--line); background: transparent; color: var(--ink); cursor: pointer;
+    transition: border-color .15s ease, background .15s ease;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .theme-toggle:hover { border-color: var(--ink-soft); background: rgba(127,127,127,0.1); }
+  }
+  .theme-toggle svg { width: 15px; height: 15px; }
+  .theme-toggle .icon-sun { display: none; }
+  :root[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+  :root[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+
+  .main { flex: 1; min-width: 0; padding: 26px 30px 40px; }
+  .page-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 22px; flex-wrap: wrap; }
+  .page-head h1 { font-size: 1.5rem; }
+  .page-head .sub { font-size: 0.86rem; color: var(--ink-soft); margin-top: 4px; }
+
+  /* ---- caisse layout ---- */
+  .pos-grid { display: grid; grid-template-columns: 1fr 320px; gap: 22px; align-items: start; }
+  .cat-block { margin-bottom: 22px; }
+  .cat-block h2 { font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-soft); font-weight: 600; margin-bottom: 10px; }
+  .prod-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .prod-tile {
+    background: var(--paper-raised); border: 1px solid var(--line); border-radius: 12px;
+    padding: 14px; text-align: left; cursor: pointer; transition: border-color .15s ease, transform .1s ease;
+  }
+  .prod-tile:active { transform: scale(0.97); }
+  @media (hover: hover) and (pointer: fine) {
+    .prod-tile:hover { border-color: var(--blue); }
+  }
+  .prod-tile .nom { font-size: 0.86rem; font-weight: 600; line-height: 1.3; margin-bottom: 8px; min-height: 2.4em; }
+  .prod-tile .prix { font-size: 0.82rem; color: var(--blue-deep); font-weight: 600; }
+
+  .ticket {
+    background: var(--paper-raised); border: 1px solid var(--line); border-radius: 16px;
+    padding: 18px; position: sticky; top: 26px;
+  }
+  .ticket-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+  .ticket-head h2 { font-size: 0.95rem; }
+  .ticket-clear { font-size: 0.78rem; color: var(--ink-soft); background: none; border: none; cursor: pointer; text-decoration: underline; padding: 0; }
+  .ticket-empty { font-size: 0.85rem; color: var(--ink-soft); padding: 26px 4px; text-align: center; }
+  .ticket-lines { display: flex; flex-direction: column; }
+  .ticket-line { display: flex; align-items: center; gap: 10px; padding-block: 10px; border-top: 1px dashed var(--line); }
+  .ticket-line:first-child { border-top: none; }
+  .ticket-line .info { flex: 1; min-width: 0; }
+  .ticket-line .info .nom { font-size: 0.85rem; font-weight: 500; }
+  .ticket-line .info .qty { font-size: 0.76rem; color: var(--ink-soft); }
+  .ticket-line .sub { font-size: 0.85rem; font-weight: 600; }
+  .ticket-line .rm {
+    width: 22px; height: 22px; border-radius: 50%; border: 1px solid var(--line); background: none;
+    color: var(--ink-soft); cursor: pointer; font-size: 0.9rem; line-height: 1; flex-shrink: 0;
+  }
+  .ticket-total { display: flex; justify-content: space-between; align-items: baseline; padding-top: 14px; margin-top: 8px; border-top: 1px solid var(--line); }
+  .ticket-total .lbl { font-size: 0.86rem; color: var(--ink-soft); }
+  .ticket-total .amt { font-size: 1.3rem; font-weight: 700; font-family: "Space Grotesk", sans-serif; }
+  .pay-methods { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 14px; }
+  .pay-btn {
+    border: 1px solid var(--line); background: var(--paper); border-radius: 10px; padding: 10px 6px;
+    font-size: 0.76rem; font-weight: 600; color: var(--ink); cursor: pointer; text-align: center;
+    transition: border-color .15s ease, background .15s ease, opacity .15s ease;
+  }
+  .pay-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  @media (hover: hover) and (pointer: fine) {
+    .pay-btn:not(:disabled):hover { border-color: var(--blue); background: var(--blue-tint); }
+  }
+  .ticket-success { display: none; text-align: center; padding: 22px 6px; }
+  .ticket-success.show { display: block; }
+  .ticket-success .check { width: 40px; height: 40px; border-radius: 50%; background: var(--good-tint); color: var(--good); display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; }
+  .ticket-success .check svg { width: 20px; height: 20px; }
+  .ticket-success h3 { font-size: 0.98rem; margin-bottom: 4px; }
+  .ticket-success p { font-size: 0.82rem; color: var(--ink-soft); margin: 0; }
+
+  footer { padding: 20px 4px 4px; }
+  footer .disclaimer {
+    font-size: 0.76rem; color: var(--ink-soft); line-height: 1.55;
+    border: 1px dashed var(--line); border-radius: 12px; padding: 12px 16px;
+  }
+
+  @media (max-width: 900px) {
+    .pos-grid { grid-template-columns: 1fr; }
+    .ticket { position: static; }
+    .prod-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 720px) {
+    .shell { flex-direction: column; }
+    .sidebar { width: 100%; height: auto; position: static; flex-direction: row; align-items: center; padding: 8px 10px; gap: 6px; }
+    .sidebar-brand { padding: 2px 4px 2px 0; flex-shrink: 0; }
+    .sidebar-brand .tag { display: none; }
+    .sidebar-nav { flex-direction: row; gap: 4px; flex: 1; justify-content: center; }
+    .sidebar-nav a { flex-direction: column; gap: 3px; padding: 7px 8px; font-size: 0.66rem; text-align: center; }
+    .sidebar-foot { margin-top: 0; margin-left: 0; flex-shrink: 0; gap: 6px; }
+    .demo-tag { display: none; }
+    .main { padding: 20px 16px 32px; }
+    .prod-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <span class="mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h18l-1.5 9.5a2 2 0 0 1-2 1.5H6.5a2 2 0 0 1-2-1.5L3 9z"/><path d="M8 9V6a4 4 0 0 1 8 0v3"/></svg>
+      </span>
+      <div>
+        <div class="name">Épicerie du Coin</div>
+        <div class="tag">Espace gestion</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="index.html" aria-current="page" aria-label="Caisse">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="13" rx="2"/><path d="M2 10h20"/><path d="M7 15h4"/></svg>
+        <span class="label">Caisse</span>
+      </a>
+      <a href="historique.html" aria-label="Historique">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>
+        <span class="label">Historique</span>
+      </a>
+      <a href="resume.html" aria-label="Résumé du jour">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M12 20V4M20 20v-7"/></svg>
+        <span class="label">Résumé du jour</span>
+      </a>
+    </nav>
+    <div class="sidebar-foot">
+      <span class="demo-tag">Démo</span>
+      <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Basculer le mode sombre">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2.5M12 19v2.5M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M2.5 12H5M19 12h2.5M4.6 19.4l1.8-1.8M17.6 6.4l1.8-1.8"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg>
+      </button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="page-head">
+      <div>
+        <h1>Caisse</h1>
+        <div class="sub">Touchez un produit pour l'ajouter au ticket.</div>
+      </div>
+    </div>
+
+    <div class="pos-grid">
+      <div id="catalog"></div>
+
+      <div class="ticket">
+        <div class="ticket-head">
+          <h2>Ticket en cours</h2>
+          <button type="button" class="ticket-clear" id="ticket-clear">Vider</button>
+        </div>
+        <div id="ticket-body">
+          <div class="ticket-empty">Le ticket est vide. Touchez un produit pour commencer.</div>
+        </div>
+        <div class="ticket-total">
+          <span class="lbl">Total</span>
+          <span class="amt tabular" id="ticket-total">0 XAF</span>
+        </div>
+        <div class="pay-methods">
+          <button type="button" class="pay-btn" data-pay="Espèces" disabled>Espèces</button>
+          <button type="button" class="pay-btn" data-pay="Carte" disabled>Carte</button>
+          <button type="button" class="pay-btn" data-pay="Mobile Money" disabled>Mobile Money</button>
+        </div>
+        <div class="ticket-success" id="ticket-success">
+          <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+          <h3 id="success-amt">Vente enregistrée</h3>
+          <p id="success-method"></p>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="disclaimer">
+        Maquette de démonstration réalisée par <strong>Kongo Nancy Emmanuel</strong>, à titre d'exemple pour un commerce. Il ne s'agit pas d'un système en production : produits, ventes et montants sont fictifs, et rien n'est enregistré au-delà de cette page.
+      </div>
+    </footer>
+  </main>
+</div>
+
+<script>
+  var PRODUITS = [
+    { id: 'p1', nom: 'Coca-Cola 50cl', prix: 500, categorie: 'Boissons' },
+    { id: 'p2', nom: 'Eau minérale 1.5L', prix: 600, categorie: 'Boissons' },
+    { id: 'p3', nom: 'Bière Primus 65cl', prix: 1200, categorie: 'Boissons' },
+    { id: 'p4', nom: 'Jus de bissap 33cl', prix: 700, categorie: 'Boissons' },
+    { id: 'p5', nom: 'Riz local 1kg', prix: 800, categorie: 'Épicerie' },
+    { id: 'p6', nom: 'Huile de palme 1L', prix: 1500, categorie: 'Épicerie' },
+    { id: 'p7', nom: 'Sucre 1kg', prix: 900, categorie: 'Épicerie' },
+    { id: 'p8', nom: 'Tomates en boîte', prix: 600, categorie: 'Épicerie' },
+    { id: 'p9', nom: 'Savon Palmolive', prix: 500, categorie: 'Hygiène' },
+    { id: 'p10', nom: 'Papier hygiénique x4', prix: 1000, categorie: 'Hygiène' },
+    { id: 'p11', nom: 'Recharge Airtel 1000F', prix: 1000, categorie: 'Recharges' },
+    { id: 'p12', nom: 'Recharge MTN 1000F', prix: 1000, categorie: 'Recharges' }
+  ];
+
+  var CATEGORIES = ['Boissons', 'Épicerie', 'Hygiène', 'Recharges'];
+  var cart = {}; // id -> qty
+
+  function formatXAF(n) {
+    return n.toLocaleString('fr-FR') + ' XAF';
+  }
+
+  function renderCatalog() {
+    var el = document.getElementById('catalog');
+    var html = '';
+    CATEGORIES.forEach(function (cat) {
+      html += '<div class="cat-block"><h2>' + cat + '</h2><div class="prod-grid">';
+      PRODUITS.filter(function (p) { return p.categorie === cat; }).forEach(function (p) {
+        html += '<button type="button" class="prod-tile" data-id="' + p.id + '"><div class="nom">' + p.nom + '</div><div class="prix tabular">' + formatXAF(p.prix) + '</div></button>';
+      });
+      html += '</div></div>';
+    });
+    el.innerHTML = html;
+    el.querySelectorAll('.prod-tile').forEach(function (btn) {
+      btn.addEventListener('click', function () { addToCart(btn.getAttribute('data-id')); });
+    });
+  }
+
+  function addToCart(id) {
+    cart[id] = (cart[id] || 0) + 1;
+    renderTicket();
+  }
+
+  function removeFromCart(id) {
+    if (!cart[id]) return;
+    cart[id] -= 1;
+    if (cart[id] <= 0) delete cart[id];
+    renderTicket();
+  }
+
+  function clearCart() {
+    cart = {};
+    renderTicket();
+  }
+
+  function cartTotal() {
+    return Object.keys(cart).reduce(function (sum, id) {
+      var p = PRODUITS.find(function (x) { return x.id === id; });
+      return sum + p.prix * cart[id];
+    }, 0);
+  }
+
+  function renderTicket() {
+    var body = document.getElementById('ticket-body');
+    var ids = Object.keys(cart);
+    var payBtns = document.querySelectorAll('.pay-btn');
+    document.getElementById('ticket-success').classList.remove('show');
+
+    if (ids.length === 0) {
+      body.innerHTML = '<div class="ticket-empty">Le ticket est vide. Touchez un produit pour commencer.</div>';
+      payBtns.forEach(function (b) { b.disabled = true; });
+    } else {
+      var html = '<div class="ticket-lines">';
+      ids.forEach(function (id) {
+        var p = PRODUITS.find(function (x) { return x.id === id; });
+        var qty = cart[id];
+        html += '<div class="ticket-line">' +
+          '<div class="info"><div class="nom">' + p.nom + '</div><div class="qty">' + formatXAF(p.prix) + ' × ' + qty + '</div></div>' +
+          '<div class="sub tabular">' + formatXAF(p.prix * qty) + '</div>' +
+          '<button type="button" class="rm" data-id="' + id + '" aria-label="Retirer une unité">−</button>' +
+          '</div>';
+      });
+      html += '</div>';
+      body.innerHTML = html;
+      body.querySelectorAll('.rm').forEach(function (btn) {
+        btn.addEventListener('click', function () { removeFromCart(btn.getAttribute('data-id')); });
+      });
+      payBtns.forEach(function (b) { b.disabled = false; });
+    }
+    document.getElementById('ticket-total').textContent = formatXAF(cartTotal());
+  }
+
+  document.getElementById('ticket-clear').addEventListener('click', clearCart);
+
+  document.querySelectorAll('.pay-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      if (btn.disabled) return;
+      var total = cartTotal();
+      var method = btn.getAttribute('data-pay');
+      document.getElementById('success-amt').textContent = 'Vente enregistrée — ' + formatXAF(total);
+      document.getElementById('success-method').textContent = 'Encaissé en ' + method + '.';
+      document.getElementById('ticket-success').classList.add('show');
+      document.getElementById('ticket-body').innerHTML = '';
+      setTimeout(function () {
+        clearCart();
+      }, 1600);
+    });
+  });
+
+  renderCatalog();
+  renderTicket();
+
+  (function () {
+    var btn = document.getElementById('theme-toggle');
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+      var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      if (isDark) {
+        document.documentElement.removeAttribute('data-theme');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+      try { localStorage.setItem('gc-theme', isDark ? 'light' : 'dark'); } catch (e) {}
+    });
+  })();
+</script>
+
+</body>
+</html>
