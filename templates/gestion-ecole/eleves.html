@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<title>Élèves — École La Réussite</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<script>
+  try {
+    if (localStorage.getItem('ge-theme') === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+  } catch (e) {}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Nunito+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #2a1420;
+    --ink-soft: rgba(42,20,32,0.6);
+    --paper: #faf5ef;
+    --paper-raised: #ffffff;
+    --line: rgba(42,20,32,0.12);
+    --wine: #8c2f4b;
+    --wine-deep: #6b2038;
+    --wine-tint: #f3e0e5;
+    --gold: #c9a227;
+    --gold-tint: #f7edc8;
+    --good: #2f7a4f;
+    --good-tint: #e3f3e8;
+    --alert: #b3261e;
+    --alert-tint: #f8e0dd;
+  }
+  :root[data-theme="dark"] {
+    --ink: #f3e9ec;
+    --ink-soft: rgba(243,233,236,0.62);
+    --paper: #1c1116;
+    --paper-raised: #26181e;
+    --line: rgba(243,233,236,0.12);
+    --wine: #d9738c;
+    --wine-deep: #e896a8;
+    --wine-tint: #3a1f27;
+    --gold: #e0bc4f;
+    --gold-tint: #3a301a;
+    --good: #5cb586;
+    --good-tint: #16301f;
+    --alert: #e2857d;
+    --alert-tint: #3a1e1a;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Nunito Sans", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 { font-family: "Lora", Georgia, serif; font-weight: 600; margin: 0; letter-spacing: -0.01em; }
+  a { color: inherit; }
+  button { font-family: inherit; }
+  ::selection { background: var(--wine); color: #fff; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--wine-deep); outline-offset: 2px; border-radius: 4px; }
+  .tabular { font-variant-numeric: tabular-nums; }
+
+  /* ---- shell ---- */
+  .shell { display: flex; min-height: 100vh; }
+  .sidebar {
+    width: 232px; flex-shrink: 0; background: var(--paper-raised); border-right: 1px solid var(--line);
+    display: flex; flex-direction: column; padding: 20px 14px; position: sticky; top: 0; height: 100vh;
+  }
+  .sidebar-brand { display: flex; align-items: center; gap: 10px; padding: 6px 8px 22px; }
+  .sidebar-brand .mark { width: 32px; height: 32px; border-radius: 9px; background: var(--wine); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .sidebar-brand .mark svg { width: 17px; height: 17px; }
+  .sidebar-brand .name { font-family: "Lora", serif; font-weight: 600; font-size: 0.92rem; line-height: 1.25; }
+  .sidebar-brand .tag { font-size: 0.72rem; color: var(--ink-soft); }
+  .sidebar-nav { display: flex; flex-direction: column; gap: 2px; }
+  .sidebar-nav a {
+    display: flex; align-items: center; gap: 11px; padding: 10px 12px; border-radius: 9px;
+    font-size: 0.88rem; font-weight: 500; text-decoration: none; color: var(--ink-soft);
+    transition: background .15s ease, color .15s ease;
+  }
+  .sidebar-nav a svg { width: 17px; height: 17px; flex-shrink: 0; }
+  .sidebar-nav a[aria-current="page"] { background: var(--wine-tint); color: var(--wine-deep); font-weight: 600; }
+  @media (hover: hover) and (pointer: fine) {
+    .sidebar-nav a:not([aria-current="page"]):hover { background: rgba(127,127,127,0.08); color: var(--ink); }
+  }
+  .sidebar-foot { margin-top: auto; display: flex; align-items: center; justify-content: space-between; padding: 10px 8px 4px; }
+  .demo-tag { font-size: 0.7rem; font-weight: 600; color: var(--ink-soft); border: 1px dashed var(--line); border-radius: 999px; padding: 4px 10px; }
+  .theme-toggle {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+    border: 1px solid var(--line); background: transparent; color: var(--ink); cursor: pointer;
+    transition: border-color .15s ease, background .15s ease;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .theme-toggle:hover { border-color: var(--ink-soft); background: rgba(127,127,127,0.1); }
+  }
+  .theme-toggle svg { width: 15px; height: 15px; }
+  .theme-toggle .icon-sun { display: none; }
+  :root[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+  :root[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+
+  .main { flex: 1; min-width: 0; padding: 26px 30px 40px; }
+  .page-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 22px; flex-wrap: wrap; }
+  .page-head h1 { font-size: 1.5rem; }
+  .page-head .sub { font-size: 0.86rem; color: var(--ink-soft); margin-top: 4px; }
+
+  /* ---- table ---- */
+  .table-card { background: var(--paper-raised); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+  table { width: 100%; border-collapse: collapse; }
+  thead th {
+    text-align: left; font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-soft);
+    font-weight: 600; padding: 13px 18px; border-bottom: 1px solid var(--line);
+  }
+  tbody td { padding: 13px 18px; border-bottom: 1px solid var(--line); font-size: 0.9rem; }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody td .parent { color: var(--ink-soft); font-size: 0.84rem; }
+  .pill {
+    display: inline-flex; align-items: center; gap: 6px; font-size: 0.78rem; font-weight: 600;
+    padding: 4px 10px; border-radius: 999px;
+  }
+  .pill .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+  .pill.a-jour { background: var(--good-tint); color: var(--good); }
+  .pill.partiel { background: var(--gold-tint); color: var(--gold); }
+  .pill.en-retard { background: var(--alert-tint); color: var(--alert); }
+  .table-foot { display: flex; justify-content: flex-end; padding: 14px 18px; border-top: 1px solid var(--line); font-size: 0.82rem; color: var(--ink-soft); }
+
+  footer { padding: 20px 4px 4px; }
+  footer .disclaimer {
+    font-size: 0.76rem; color: var(--ink-soft); line-height: 1.55;
+    border: 1px dashed var(--line); border-radius: 12px; padding: 12px 16px;
+  }
+
+  @media (max-width: 720px) {
+    .shell { flex-direction: column; }
+    .sidebar { width: 100%; height: auto; position: static; flex-direction: row; align-items: center; padding: 8px 10px; gap: 6px; }
+    .sidebar-brand { padding: 2px 4px 2px 0; flex-shrink: 0; }
+    .sidebar-brand .tag { display: none; }
+    .sidebar-nav { flex-direction: row; gap: 4px; flex: 1; justify-content: center; }
+    .sidebar-nav a { flex-direction: column; gap: 3px; padding: 7px 8px; font-size: 0.66rem; text-align: center; }
+    .sidebar-foot { margin-top: 0; margin-left: 0; flex-shrink: 0; gap: 6px; }
+    .demo-tag { display: none; }
+    .main { padding: 20px 16px 32px; }
+    .table-card { overflow-x: auto; }
+    table { min-width: 560px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <span class="mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L2 8l10 5 10-5-10-5z"/><path d="M6 10.5V16c0 1.5 3 3 6 3s6-1.5 6-3v-5.5"/></svg>
+      </span>
+      <div>
+        <div class="name">École La Réussite</div>
+        <div class="tag">Espace gestion</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="index.html" aria-label="Tableau de bord">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="9" rx="1.5"/><rect x="13" y="3" width="8" height="5" rx="1.5"/><rect x="13" y="12" width="8" height="9" rx="1.5"/><rect x="3" y="16" width="8" height="5" rx="1.5"/></svg>
+        <span class="label">Tableau de bord</span>
+      </a>
+      <a href="eleves.html" aria-current="page" aria-label="Élèves">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="18" cy="9" r="2.6"/><path d="M15.5 14.2c2.6.3 4.5 2.5 4.5 5.3"/></svg>
+        <span class="label">Élèves</span>
+      </a>
+      <a href="fiche-eleve.html" aria-label="Frais de scolarité">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h9l3 3v17H6z"/><path d="M9 8h6M9 12h6M9 16h4"/></svg>
+        <span class="label">Frais de scolarité</span>
+      </a>
+    </nav>
+    <div class="sidebar-foot">
+      <span class="demo-tag">Démo</span>
+      <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Basculer le mode sombre">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2.5M12 19v2.5M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M2.5 12H5M19 12h2.5M4.6 19.4l1.8-1.8M17.6 6.4l1.8-1.8"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg>
+      </button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="page-head">
+      <div>
+        <h1>Élèves</h1>
+        <div class="sub">10 élèves affichés à titre d'exemple, sur 187 inscrits</div>
+      </div>
+    </div>
+
+    <div class="table-card">
+      <table>
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Classe</th>
+            <th>Contact parent</th>
+            <th>Statut des frais</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Divine Mbemba</td><td>CM2</td><td class="parent">+242 06 512 44 09</td><td><span class="pill a-jour"><span class="dot"></span>À jour</span></td></tr>
+          <tr><td>Grâce Loubaki</td><td>CE1</td><td class="parent">+242 05 341 87 22</td><td><span class="pill en-retard"><span class="dot"></span>En retard</span></td></tr>
+          <tr><td>Junior Nkounkou</td><td>CP2</td><td class="parent">+242 06 278 50 13</td><td><span class="pill partiel"><span class="dot"></span>Partiel</span></td></tr>
+          <tr><td>Merveille Itoua</td><td>CM1</td><td class="parent">+242 05 690 32 47</td><td><span class="pill a-jour"><span class="dot"></span>À jour</span></td></tr>
+          <tr><td>Confiance Malonga</td><td>CE2</td><td class="parent">+242 06 823 15 60</td><td><span class="pill a-jour"><span class="dot"></span>À jour</span></td></tr>
+          <tr><td>Béni Samba</td><td>CP1</td><td class="parent">+242 05 447 92 38</td><td><span class="pill en-retard"><span class="dot"></span>En retard</span></td></tr>
+          <tr><td>Précieux Ondongo</td><td>CM2</td><td class="parent">+242 06 165 74 91</td><td><span class="pill partiel"><span class="dot"></span>Partiel</span></td></tr>
+          <tr><td>Josué Batantou</td><td>CE1</td><td class="parent">+242 05 734 08 26</td><td><span class="pill a-jour"><span class="dot"></span>À jour</span></td></tr>
+          <tr><td>Rachel Mabiala</td><td>CM1</td><td class="parent">+242 06 981 63 54</td><td><span class="pill a-jour"><span class="dot"></span>À jour</span></td></tr>
+          <tr><td>Emmanuel Kimbembe</td><td>CP2</td><td class="parent">+242 05 256 19 70</td><td><span class="pill en-retard"><span class="dot"></span>En retard</span></td></tr>
+        </tbody>
+      </table>
+      <div class="table-foot">5 à jour · 2 partiels · 3 en retard, sur cet échantillon</div>
+    </div>
+
+    <footer>
+      <div class="disclaimer">
+        Maquette de démonstration réalisée par <strong>Kongo Nancy Emmanuel</strong>, à titre d'exemple pour un établissement scolaire. Il ne s'agit pas d'un système en production : élèves, classes et montants sont fictifs.
+      </div>
+    </footer>
+  </main>
+</div>
+
+<script>
+  (function () {
+    var btn = document.getElementById('theme-toggle');
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+      var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      if (isDark) {
+        document.documentElement.removeAttribute('data-theme');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+      try { localStorage.setItem('ge-theme', isDark ? 'light' : 'dark'); } catch (e) {}
+    });
+  })();
+</script>
+
+</body>
+</html>

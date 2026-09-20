@@ -42,6 +42,22 @@ transactions: id, heure, montant, mode_paiement
 
 Le ticket en cours sur l'écran caisse (panier client, JS pur, non persisté) associe des `produits.id` à une quantité — pas de champ `date` sur les transactions (une seule journée fictive simulée par écran, `17 mars 2026`).
 
+#### gestion-ecole (Phase 2 — livré le 2026-09-20)
+
+Pilote "École La Réussite" (école primaire privée fictive), 3 écrans (`index.html` tableau de bord, `eleves.html`, `fiche-eleve.html`), données codées en dur en JS/HTML dans chaque page :
+
+```text
+eleves: id, nom, classe, contact_parent, statut_frais
+  classe ∈ { CP1, CP2, CE1, CE2, CM1, CM2 }
+  statut_frais ∈ { a_jour, partiel, en_retard }
+
+frais: id, eleve_id, poste, montant_du, montant_paye, statut, date_echeance
+  poste ∈ { inscription, trimestre_1, trimestre_2, trimestre_3 }
+  statut ∈ { paye, partiel, a_venir }
+```
+
+Barème illustratif : inscription 35 000 XAF (unique) + scolarité 100 000 XAF/trimestre × 3 (année scolaire en 3 trimestres, Oct–Juil, convention confirmée par `docs/research/2026-09-20-school-management-ui-conventions.md`). La liste `eleves.html` affiche 10 élèves à titre d'exemple sur les 187 comptés au tableau de bord ; seule Grâce Loubaki (statut `en_retard`) a une fiche `frais` complète construite (`fiche-eleve.html`), les autres statuts de la liste sont illustratifs sans détail de paiement sous-jacent.
+
 #### Autres prototypes (Phase 2/3 — pas encore construits)
 
-Sections à ajouter au moment de la construction de chacun : `gestion-ecole`, `gestion-auberge`, `gestion-comptable`, `gestion-restaurant`, `agence-livraison`, `noki-clone`.
+Sections à ajouter au moment de la construction de chacun : `gestion-auberge`, `gestion-comptable`, `gestion-restaurant`, `agence-livraison`, `noki-clone`.
