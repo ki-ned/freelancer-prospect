@@ -15,9 +15,15 @@ Les deux mockups existants ont été audités (bug de layout `.fruit-wheel` corr
 
 ## Initiative "templates génériques" (`templates/`)
 
-**Statut : planifiée, pas encore commencée.** Voir `docs/feature-backlog.md` pour le détail des 9 contextes et le phasage (Phase 0 → Phase 3).
+**Statut : Phase 0 (infrastructure) terminée le 2026-09-19.** Voir `docs/feature-backlog.md` pour le détail des contextes et le phasage (Phase 0 → Phase 3).
 
-Skills installés pour cette initiative : `prototype` (emilkowalski), `research` (mattpocock). Le dossier `templates/` ne contient encore que `proposal-template.html` (squelette hérité, pré-initiative).
+- `templates/index.html` créé : galerie des 8 contextes prévus, tous marqués "à venir" pour l'instant (aucun lien tant que le template n'est pas construit).
+- `index.html` racine refondu avec une identité propre ("Kongo Nancy Emmanuel", Fraunces/Work Sans, ink `#1c1f2e`/paper `#f6f3ec`/accent teal `#2f6f62`) — corrige le fait qu'elle recyclait auparavant la palette exacte de Brandon Service Location. Section "Templates génériques" ajoutée, qui pointe vers `templates/index.html`.
+- QA responsive faite via `agent-browser` (1440/834/390px) sur les deux pages : rien à signaler.
+- **Phase 1, premier pilote livré (2026-09-20)** : `templates/restaurant-vitrine/` — vitrine "Chez Tantine" (cuisine congolaise traditionnelle revisitée), identité terracotta/or dédiée (encre `#241a15`, crème `#f7ecda`, brique `#b8492b`, or `#d1962f`, typo Unbounded/Manrope), 5 sections (hero, carte, ambiance, horaires/localisation, contact WhatsApp), mode clair/sombre. Carte mise à jour dans `templates/index.html`. QA `agent-browser` faite (1440/834/390px, clair et sombre) — un bug réel trouvé et corrigé : le panneau de contact réutilisait `--ink`/`--paper` (tokens réactifs au thème) au lieu de tokens fixes, rendant les libellés "GÉRANTE"/"ZONE" illisibles en mode sombre ; corrigé avec des tokens `--panel-ink`/`--panel-paper` dédiés, même pattern que Brandon Service Location.
+- Prochaine étape : Phase 1, second pilote `templates/gestion-caisse/` (famille B, 3 écrans : caisse, historique des ventes, résumé de journée).
+
+Skills installés pour cette initiative : `prototype` (emilkowalski), `research` (mattpocock). Le dossier `templates/` contient encore `proposal-template.html` (squelette hérité pour les prospects réels, pré-initiative — sans rapport avec la galerie `templates/index.html`).
 
 ## Infrastructure
 

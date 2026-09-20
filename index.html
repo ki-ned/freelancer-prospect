@@ -2,59 +2,70 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8" />
-<title>Maquettes prospects — Emmanuel Kongo</title>
+<title>Kongo Nancy Emmanuel — Développeur freelance</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="description" content="Maquettes commerciales et prototypes réalisés par Kongo Nancy Emmanuel pour des PME en République du Congo." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;900&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --ink: #14181c;
-    --ink-soft: #565f66;
-    --paper: #f3f2ee;
+    --ink: #1c1f2e;
+    --ink-soft: #5b5f72;
+    --paper: #f6f3ec;
     --paper-raised: #ffffff;
-    --line: rgba(20,24,28,0.12);
-    --accent: #d9691b;
+    --line: rgba(28,31,46,0.12);
+    --accent: #2f6f62;
+    --accent-soft: rgba(47,111,98,0.12);
   }
   @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --ink: #eef0ee;
-      --ink-soft: #a9b0ab;
-      --paper: #14181c;
-      --paper-raised: #1d2227;
-      --line: rgba(238,240,238,0.14);
-      --accent: #ef8b3f;
+    :root {
+      --ink: #eeeee8;
+      --ink-soft: #a6a9ba;
+      --paper: #15161f;
+      --paper-raised: #1d1f2b;
+      --line: rgba(238,238,232,0.12);
+      --accent: #6cbba9;
+      --accent-soft: rgba(108,187,169,0.14);
     }
-  }
-  :root[data-theme="dark"] {
-    --ink: #eef0ee;
-    --ink-soft: #a9b0ab;
-    --paper: #14181c;
-    --paper-raised: #1d2227;
-    --line: rgba(238,240,238,0.14);
-    --accent: #ef8b3f;
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
   body {
     background: var(--paper);
     color: var(--ink);
-    font-family: "IBM Plex Sans", system-ui, sans-serif;
+    font-family: "Work Sans", system-ui, sans-serif;
     padding-inline: 20px;
-    padding-block: max(40px, env(safe-area-inset-top)) max(40px, env(safe-area-inset-bottom));
+    padding-block: max(56px, env(safe-area-inset-top)) max(48px, env(safe-area-inset-bottom));
   }
-  .wrap { max-width: 880px; margin-inline: auto; }
-  h1 { font-family: "Archivo", system-ui, sans-serif; font-weight: 900; font-size: clamp(1.8rem, 4vw, 2.4rem); letter-spacing: -0.01em; margin: 0 0 10px; }
-  p.lede { color: var(--ink-soft); font-size: 1.02rem; line-height: 1.6; max-width: 60ch; margin: 0 0 40px; }
+  .wrap { max-width: 920px; margin-inline: auto; }
+  .kicker { font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin: 0 0 14px; }
+  h1 { font-family: "Fraunces", Georgia, serif; font-weight: 600; font-size: clamp(2rem, 5vw, 2.9rem); letter-spacing: -0.01em; line-height: 1.1; margin: 0 0 14px; }
+  p.lede { color: var(--ink-soft); font-size: 1.05rem; line-height: 1.65; max-width: 62ch; margin: 0 0 52px; }
+  section { margin-bottom: 52px; }
+  section h2 { font-family: "Fraunces", Georgia, serif; font-weight: 600; font-size: 1.35rem; margin: 0 0 6px; }
+  section p.section-note { color: var(--ink-soft); font-size: 0.94rem; line-height: 1.55; max-width: 60ch; margin: 0 0 22px; }
   .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
   .card {
     background: var(--paper-raised); border: 1px solid var(--line); border-radius: 16px;
     padding: 22px; text-decoration: none; color: inherit; display: block;
+    transition: border-color 0.15s ease, transform 0.15s ease;
   }
+  .card:hover { border-color: var(--accent); transform: translateY(-2px); }
   .card .tag { display: inline-block; font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent); margin-bottom: 10px; }
-  .card h2 { font-family: "Archivo", sans-serif; font-weight: 700; font-size: 1.1rem; margin: 0 0 6px; }
+  .card h3 { font-family: "Fraunces", Georgia, serif; font-weight: 600; font-size: 1.1rem; margin: 0 0 6px; }
   .card p { font-size: 0.88rem; color: var(--ink-soft); line-height: 1.5; margin: 0; }
-  footer { margin-top: 48px; font-size: 0.8rem; color: var(--ink-soft); }
+  .catalog-card {
+    background: var(--accent-soft); border: 1px solid var(--line); border-radius: 16px;
+    padding: 26px; text-decoration: none; color: inherit; display: flex; align-items: center;
+    justify-content: space-between; gap: 20px; flex-wrap: wrap;
+    transition: border-color 0.15s ease;
+  }
+  .catalog-card:hover { border-color: var(--accent); }
+  .catalog-card h3 { font-family: "Fraunces", Georgia, serif; font-weight: 600; font-size: 1.15rem; margin: 0 0 6px; }
+  .catalog-card p { font-size: 0.9rem; color: var(--ink-soft); line-height: 1.5; margin: 0; max-width: 48ch; }
+  .catalog-card .arrow { font-family: "Fraunces", Georgia, serif; font-size: 1.6rem; color: var(--accent); flex: 0 0 auto; }
+  footer { margin-top: 8px; font-size: 0.82rem; color: var(--ink-soft); }
   @media (max-width: 640px) {
     .grid { grid-template-columns: 1fr; }
   }
@@ -62,23 +73,39 @@
 </head>
 <body>
 <div class="wrap">
-  <h1>Maquettes de prospection</h1>
-  <p class="lede">Propositions commerciales réalisées par Emmanuel Kongo pour des prospects en République du Congo — pages de vitrine conceptuelles, à faire évoluer selon les retours clients.</p>
+  <p class="kicker">Kongo Nancy Emmanuel · Développeur freelance</p>
+  <h1>Maquettes et prototypes commerciaux</h1>
+  <p class="lede">Propositions conceptuelles réalisées pour des PME en République du Congo — pages de vitrine et prototypes de gestion, pensés secteur par secteur et affinés selon les retours de chaque client.</p>
 
-  <div class="grid">
-    <a class="card" href="prospects/healthy-baobab/">
-      <span class="tag">Pointe-Noire · Agroalimentaire</span>
-      <h2>Healthy Baobab</h2>
-      <p>Vitrine pour une gamme de smoothies et produits sains à base de fruits et de baobab.</p>
-    </a>
-    <a class="card" href="prospects/brandon-service-location/">
-      <span class="tag">Brazzaville · Transport</span>
-      <h2>Brandon Service Location</h2>
-      <p>Vitrine pour la location de véhicules avec chauffeur, la vente et les contrats entreprises.</p>
-    </a>
-  </div>
+  <section>
+    <h2>Prospects réels</h2>
+    <p class="section-note">Maquettes réalisées pour un décideur précis, à partir de son activité et de sa zone.</p>
+    <div class="grid">
+      <a class="card" href="prospects/healthy-baobab/">
+        <span class="tag">Pointe-Noire · Agroalimentaire</span>
+        <h3>Healthy Baobab</h3>
+        <p>Vitrine pour une gamme de smoothies et produits sains à base de fruits et de baobab.</p>
+      </a>
+      <a class="card" href="prospects/brandon-service-location/">
+        <span class="tag">Brazzaville · Transport</span>
+        <h3>Brandon Service Location</h3>
+        <p>Vitrine pour la location de véhicules avec chauffeur, la vente et les contrats entreprises.</p>
+      </a>
+    </div>
+  </section>
 
-  <footer>Emmanuel Kongo — freelance</footer>
+  <section>
+    <h2>Templates génériques</h2>
+    <a class="catalog-card" href="templates/">
+      <span>
+        <h3>Catalogue de démonstration par secteur</h3>
+        <p>Vitrines et prototypes de gestion réutilisables — restaurant, école, auberge, comptabilité, caisse, livraison — pour démontrer une capacité avant même d'avoir un prospect précis.</p>
+      </span>
+      <span class="arrow">→</span>
+    </a>
+  </section>
+
+  <footer>Kongo Nancy Emmanuel — freelance, République du Congo</footer>
 </div>
 </body>
 </html>

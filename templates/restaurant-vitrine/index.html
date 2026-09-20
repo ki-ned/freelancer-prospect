@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<title>Chez Tantine — Cuisine congolaise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<script>
+  try {
+    if (localStorage.getItem('tt-theme') === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+  } catch (e) {}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #241a15;
+    --ink-soft: rgba(36,26,21,0.62);
+    --paper: #f7ecda;
+    --paper-raised: #fffaf0;
+    --line: rgba(36,26,21,0.14);
+    --brick: #b8492b;
+    --brick-deep: #8f3620;
+    --brick-tint: #f4ddd0;
+    --gold: #d1962f;
+    --good: #2f7a4f;
+    --panel-ink: #241a15;
+    --panel-paper: #f7ecda;
+  }
+  :root[data-theme="dark"] {
+    --ink: #f3e7d8;
+    --ink-soft: rgba(243,231,216,0.66);
+    --paper: #201512;
+    --paper-raised: #2c1f19;
+    --line: rgba(243,231,216,0.14);
+    --brick: #e17a52;
+    --brick-deep: #f1966d;
+    --brick-tint: #3a251d;
+    --gold: #e8b458;
+    --good: #5cb586;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Manrope", system-ui, sans-serif;
+    padding-inline: 20px;
+    padding-block: max(20px, env(safe-area-inset-top)) max(44px, env(safe-area-inset-bottom));
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1080px; margin-inline: auto; }
+  h1, h2, h3 { font-family: "Unbounded", system-ui, sans-serif; font-weight: 700; text-wrap: balance; margin: 0; letter-spacing: -0.01em; }
+  a { color: inherit; }
+  ::selection { background: var(--brick); color: #fff6ee; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--brick-deep); outline-offset: 3px; border-radius: 4px; }
+
+  /* ---- top bar ---- */
+  .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 18px; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+  .brand { display: flex; align-items: center; gap: 10px; font-family: "Unbounded", sans-serif; font-weight: 700; font-size: 1.05rem; }
+  .brand-mark { width: 36px; height: 36px; border-radius: 50%; background: radial-gradient(circle at 32% 30%, var(--gold), var(--brick) 75%); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .brand-mark svg { width: 18px; height: 18px; }
+  .topbar nav { display: flex; gap: 22px; font-size: 0.88rem; color: var(--ink-soft); font-weight: 500; }
+  .topbar nav a { text-decoration: none; transition: color .15s ease; }
+  @media (hover: hover) and (pointer: fine) {
+    .topbar nav a:hover { color: var(--ink); }
+  }
+  .btn-wa {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--ink); color: var(--paper);
+    padding: 10px 18px; border-radius: 999px; font-weight: 600; font-size: 0.88rem;
+    text-decoration: none; white-space: nowrap; transition: transform .16s cubic-bezier(.16,1,.3,1);
+  }
+  .btn-wa:active { transform: scale(0.97); }
+  @media (hover: hover) and (pointer: fine) {
+    .btn-wa:hover { transform: translateY(-1px); }
+  }
+  .btn-wa svg { width: 15px; height: 15px; }
+  .theme-toggle {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+    border: 1px solid var(--line); background: transparent; color: var(--ink); cursor: pointer;
+    transition: border-color .15s ease, background .15s ease, transform .16s cubic-bezier(.16,1,.3,1);
+  }
+  .theme-toggle:active { transform: scale(0.93); }
+  @media (hover: hover) and (pointer: fine) {
+    .theme-toggle:hover { border-color: var(--ink-soft); background: rgba(127,127,127,0.1); }
+  }
+  .theme-toggle svg { width: 16px; height: 16px; }
+  .theme-toggle .icon-sun { display: none; }
+  :root[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+  :root[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+
+  /* ---- hero ---- */
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--brick-tint); color: var(--brick-deep);
+    border-radius: 999px; padding: 6px 14px; font-size: 0.78rem; font-weight: 600;
+    margin-top: 20px;
+  }
+  .badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--good); }
+  .hero { padding-block: 48px 40px; display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 48px; align-items: center; }
+  .hero h1 { font-size: clamp(2rem, 4.4vw, 3.1rem); line-height: 1.08; }
+  .hero h1 em { font-style: normal; color: var(--brick-deep); }
+  .hero p.lede { color: var(--ink-soft); font-size: 1.04rem; line-height: 1.6; max-width: 48ch; margin-top: 18px; }
+  .hero-ctas { display: flex; gap: 12px; margin-top: 26px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--brick); color: #fff6ee; padding: 13px 24px; border-radius: 10px;
+    font-weight: 700; text-decoration: none; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 8px;
+    transition: transform .16s cubic-bezier(.16,1,.3,1), box-shadow .16s ease;
+  }
+  .btn-primary:active { transform: scale(0.97); }
+  .btn-ghost {
+    border: 1px solid var(--line); padding: 13px 22px; border-radius: 10px;
+    font-weight: 600; text-decoration: none; font-size: 0.95rem; color: var(--ink);
+    transition: border-color .15s ease, background .15s ease, transform .16s cubic-bezier(.16,1,.3,1);
+  }
+  .btn-ghost:active { transform: scale(0.97); }
+  @media (hover: hover) and (pointer: fine) {
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 10px 24px -12px rgba(143,54,32,0.5); }
+    .btn-ghost:hover { border-color: var(--ink-soft); background: rgba(36,26,21,0.04); }
+  }
+  .stat-row { display: flex; gap: 28px; margin-top: 32px; flex-wrap: wrap; }
+  .stat b { display: block; font-family: "Unbounded", sans-serif; font-size: 1.35rem; font-weight: 700; }
+  .stat span { font-size: 0.8rem; color: var(--ink-soft); }
+
+  .hero-card {
+    background: var(--paper-raised); border-radius: 18px;
+    padding: 22px; box-shadow: 0 24px 60px -28px rgba(36,26,21,0.3);
+    border: 1px solid var(--line);
+  }
+  .hero-card .kicker { font-size: 0.78rem; font-weight: 600; color: var(--ink-soft); margin-bottom: 14px; }
+  .fare-row { display: flex; justify-content: space-between; align-items: baseline; padding-block: 14px; border-top: 1px dashed var(--line); gap: 12px; }
+  .fare-row:first-of-type { border-top: none; }
+  .fare-row .name { font-weight: 600; font-size: 0.92rem; }
+  .fare-row .sub { font-size: 0.76rem; color: var(--ink-soft); }
+  .fare-row .price { font-weight: 700; font-size: 0.95rem; color: var(--brick-deep); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .hero-card .note { font-size: 0.78rem; color: var(--ink-soft); margin-top: 14px; }
+
+  /* ---- section shell ---- */
+  section { padding-block: 46px; border-top: 1px solid var(--line); }
+  .section-head { max-width: 60ch; margin-bottom: 32px; }
+  .section-head h2 { font-size: clamp(1.4rem, 2.8vw, 1.9rem); }
+  .section-head p { color: var(--ink-soft); margin-top: 10px; line-height: 1.55; }
+
+  /* ---- menu ---- */
+  .menu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .menu-card { background: var(--paper-raised); border: 1px solid var(--line); border-radius: 16px; padding: 18px; }
+  .swatch { height: 84px; border-radius: 10px; margin-bottom: 14px; }
+  .sw1 { background: linear-gradient(135deg, var(--gold), var(--brick)); }
+  .sw2 { background: linear-gradient(135deg, #a6c46a, #5c7a35); }
+  .sw3 { background: linear-gradient(135deg, #e0834a, #a8431f); }
+  .sw4 { background: linear-gradient(135deg, #8fa563, #4b5c2c); }
+  .sw5 { background: linear-gradient(135deg, #7fbf8a, #3d7a52); }
+  .sw6 { background: linear-gradient(135deg, #e589a3, #b8305a); }
+  .menu-card h3 { font-size: 1rem; margin-bottom: 6px; }
+  .menu-card p { font-size: 0.85rem; color: var(--ink-soft); line-height: 1.5; margin: 0 0 12px; }
+  .menu-card .price { font-weight: 700; font-size: 0.92rem; color: var(--brick-deep); font-variant-numeric: tabular-nums; }
+  .menu-note { font-size: 0.76rem; color: var(--ink-soft); margin-top: 16px; }
+
+  /* ---- ambiance ---- */
+  .ambiance { display: flex; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .amb-item { flex: 1; padding: 26px 28px; border-left: 1px solid var(--line); }
+  .amb-item:first-child { border-left: none; padding-left: 0; }
+  .amb-item .mark { width: 30px; height: 30px; margin-bottom: 16px; color: var(--brick-deep); }
+  .amb-item h3 { font-size: 1rem; margin-bottom: 8px; }
+  .amb-item p { font-size: 0.88rem; color: var(--ink-soft); line-height: 1.55; margin: 0; }
+
+  /* ---- horaires / localisation ---- */
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .info-card { background: var(--paper-raised); border: 1px solid var(--line); border-radius: 16px; padding: 24px; }
+  .info-card h3 { font-size: 1rem; margin-bottom: 14px; }
+  .info-row { display: flex; justify-content: space-between; padding-block: 9px; border-top: 1px dashed var(--line); font-size: 0.88rem; }
+  .info-row:first-of-type { border-top: none; }
+  .info-row .day { color: var(--ink-soft); }
+  .info-row .hrs { font-weight: 600; }
+  .info-card address { font-style: normal; font-size: 0.92rem; line-height: 1.7; color: var(--ink-soft); }
+  .info-card address strong { color: var(--ink); display: block; font-size: 0.95rem; margin-bottom: 4px; }
+
+  /* ---- contact ---- */
+  .contact-panel {
+    background: var(--panel-ink); color: var(--panel-paper); border-radius: 20px; padding: 40px;
+    border: 1px solid var(--line);
+    display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 32px; align-items: center;
+  }
+  .contact-panel h2 { font-size: clamp(1.3rem, 2.8vw, 1.8rem); color: var(--panel-paper); }
+  .contact-panel p { color: rgba(247,236,218,0.68); margin-top: 10px; line-height: 1.55; max-width: 44ch; }
+  .contact-panel .btn-primary { background: var(--gold); color: #241a15; }
+  .contact-ph { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
+  .contact-ph .lbl { font-size: 0.78rem; color: rgba(247,236,218,0.55); text-transform: uppercase; letter-spacing: 0.06em; }
+  .contact-ph .num { font-size: 1.2rem; font-weight: 700; }
+
+  footer { padding-block: 28px 10px; text-align: center; }
+  footer .disclaimer {
+    font-size: 0.78rem; color: var(--ink-soft); max-width: 58ch; margin: 0 auto; line-height: 1.6;
+    border: 1px dashed var(--line); border-radius: 12px; padding: 14px 18px;
+  }
+
+  @keyframes rise-in {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero > div:first-child > * { animation: rise-in .7s cubic-bezier(.16,1,.3,1) both; }
+  .hero > div:first-child > *:nth-child(2) { animation-delay: .05s; }
+  .hero > div:first-child > *:nth-child(3) { animation-delay: .1s; }
+  .hero > div:first-child > *:nth-child(4) { animation-delay: .15s; }
+  .hero-card { animation: rise-in .8s cubic-bezier(.16,1,.3,1) .1s both; }
+  @media (prefers-reduced-motion: reduce) {
+    .hero > div:first-child > *, .hero-card { animation: none; }
+  }
+
+  @media (max-width: 760px) {
+    .hero { grid-template-columns: 1fr; padding-block: 32px 24px; }
+    .menu-grid { grid-template-columns: 1fr; }
+    .ambiance { flex-direction: column; }
+    .amb-item { border-left: none; border-top: 1px solid var(--line); padding: 22px 0; }
+    .amb-item:first-child { border-top: none; padding-top: 0; }
+    .info-grid { grid-template-columns: 1fr; }
+    .contact-panel { grid-template-columns: 1fr; padding: 26px; text-align: left; }
+    .topbar nav { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="topbar">
+    <div class="brand">
+      <span class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff6ee" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v7a3 3 0 0 0 6 0V3"/><path d="M9 10v11"/><path d="M17 3c-1.5 1.5-1.5 5 0 6.5"/><path d="M17 3v18"/></svg>
+      </span>
+      Chez Tantine
+    </div>
+    <nav>
+      <a href="#carte">La carte</a>
+      <a href="#ambiance">L'ambiance</a>
+      <a href="#horaires">Horaires</a>
+    </nav>
+    <div style="display:flex; align-items:center; gap:12px;">
+      <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Basculer le mode sombre">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2.5M12 19v2.5M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M2.5 12H5M19 12h2.5M4.6 19.4l1.8-1.8M17.6 6.4l1.8-1.8"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg>
+      </button>
+      <a class="btn-wa" href="https://wa.me/242068942173" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.5-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.1.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1.1 2.8 1.2 3c.1.2 2.2 3.4 5.4 4.7.7.3 1.3.5 1.8.7.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.1-1.4-.1-.1-.3-.2-.6-.3z"/><path d="M12 2a10 10 0 0 0-8.5 15.3L2 22l4.8-1.5A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .9.9-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
+        WhatsApp
+      </a>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div>
+      <h1>La cuisine congolaise,<br><em>comme à la maison.</em></h1>
+      <p class="lede">Chez Tantine sert les plats qui rassemblent une famille autour d'une table : poisson braisé, saka-saka, poulet moambe, préparés chaque jour avec les produits du marché.</p>
+      <span class="badge"><span class="dot"></span> Service midi et soir, du mardi au dimanche</span>
+      <div class="hero-ctas">
+        <a class="btn-primary" href="https://wa.me/242068942173" target="_blank" rel="noopener">Réserver sur WhatsApp</a>
+        <a class="btn-ghost" href="#carte">Voir la carte</a>
+      </div>
+      <div class="stat-row">
+        <div class="stat"><b>2019</b><span>Ouvert depuis</span></div>
+        <div class="stat"><b>6</b><span>plats phares</span></div>
+        <div class="stat"><b>Mar–Dim</b><span>Midi et soir</span></div>
+      </div>
+    </div>
+    <div class="hero-card">
+      <div class="kicker">Suggestions du jour</div>
+      <div class="fare-row">
+        <div><div class="name">Poisson braisé au piment</div><div class="sub">Servi avec bâton de manioc</div></div>
+        <div class="price">4 500 XAF*</div>
+      </div>
+      <div class="fare-row">
+        <div><div class="name">Poulet moambe</div><div class="sub">Sauce à la noix de palme, riz</div></div>
+        <div class="price">4 000 XAF*</div>
+      </div>
+      <div class="fare-row">
+        <div><div class="name">Saka-saka au poisson fumé</div><div class="sub">Feuilles de manioc pilées</div></div>
+        <div class="price">3 500 XAF*</div>
+      </div>
+      <div class="note">* Carte et tarifs à titre d'illustration, à remplacer par vos plats réels.</div>
+    </div>
+  </div>
+
+  <section id="carte">
+    <div class="section-head">
+      <h2>Six plats pour commencer</h2>
+      <p>Une sélection resserrée, pensée pour tenir sur une seule page : à remplacer par vos recettes et vos photos réelles.</p>
+    </div>
+    <div class="menu-grid">
+      <div class="menu-card">
+        <div class="swatch sw1"></div>
+        <h3>Poisson braisé au piment</h3>
+        <p>Tilapia grillé au feu de bois, sauce pili-pili, bâton de manioc.</p>
+        <div class="price">4 500 XAF*</div>
+      </div>
+      <div class="menu-card">
+        <div class="swatch sw2"></div>
+        <h3>Saka-saka au poisson fumé</h3>
+        <p>Feuilles de manioc pilées, huile de palme, poisson fumé.</p>
+        <div class="price">3 500 XAF*</div>
+      </div>
+      <div class="menu-card">
+        <div class="swatch sw3"></div>
+        <h3>Poulet moambe</h3>
+        <p>Poulet mijoté à la noix de palme, riz blanc.</p>
+        <div class="price">4 000 XAF*</div>
+      </div>
+      <div class="menu-card">
+        <div class="swatch sw4"></div>
+        <h3>Maboké de poisson</h3>
+        <p>Poisson mariné, cuit et servi dans sa feuille de bananier.</p>
+        <div class="price">4 500 XAF*</div>
+      </div>
+      <div class="menu-card">
+        <div class="swatch sw5"></div>
+        <h3>Fumbwa aux crevettes</h3>
+        <p>Feuilles de fumbwa, crevettes, arachide pilée.</p>
+        <div class="price">3 800 XAF*</div>
+      </div>
+      <div class="menu-card">
+        <div class="swatch sw6"></div>
+        <h3>Jus maison bissap-gingembre</h3>
+        <p>Infusion d'hibiscus, gingembre frais, un peu de citron.</p>
+        <div class="price">1 500 XAF*</div>
+      </div>
+    </div>
+    <p class="menu-note">* Recettes et tarifs illustratifs, à remplacer par votre menu réel.</p>
+  </section>
+
+  <section id="ambiance">
+    <div class="section-head">
+      <h2>L'ambiance chez Tantine</h2>
+      <p>Pas encore de photos ? Cette section peut se remplir avec les vôtres dès qu'elles sont prêtes.</p>
+    </div>
+    <div class="ambiance">
+      <div class="amb-item">
+        <svg class="mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c4-2 7-6 7-11a7 7 0 0 0-14 0c0 5 3 9 7 11z"/><path d="M12 10v7"/></svg>
+        <h3>Braise et feu de bois</h3><p>Les grillades cuisent lentement, à l'ancienne, pour le goût fumé qu'aucun four ne reproduit.</p>
+      </div>
+      <div class="amb-item">
+        <svg class="mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/><circle cx="12" cy="8" r="4"/></svg>
+        <h3>Recettes de famille</h3><p>Les mêmes dosages transmis de génération en génération, sans raccourci.</p>
+      </div>
+      <div class="amb-item">
+        <svg class="mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="10" width="18" height="8" rx="2"/><path d="M7 10V7a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v3"/></svg>
+        <h3>Table partagée</h3><p>Une salle conviviale, faite pour les repas en groupe, en famille ou entre collègues.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="horaires">
+    <div class="section-head">
+      <h2>Horaires et localisation</h2>
+    </div>
+    <div class="info-grid">
+      <div class="info-card">
+        <h3>Horaires d'ouverture</h3>
+        <div class="info-row"><span class="day">Mardi – Vendredi</span><span class="hrs">11h – 15h · 18h – 22h</span></div>
+        <div class="info-row"><span class="day">Samedi – Dimanche</span><span class="hrs">11h – 22h</span></div>
+        <div class="info-row"><span class="day">Lundi</span><span class="hrs">Fermé</span></div>
+      </div>
+      <div class="info-card">
+        <h3>Où nous trouver</h3>
+        <address>
+          <strong>Chez Tantine</strong>
+          Avenue de la Paix, quartier Moungali<br>
+          Brazzaville, République du Congo
+        </address>
+      </div>
+    </div>
+  </section>
+
+  <section style="border-bottom: none;">
+    <div class="contact-panel">
+      <div>
+        <h2>Prêt à recevoir vos réservations depuis un lien ?</h2>
+        <p>Cette page est une maquette de vitrine pour un restaurant, pensée pour présenter la carte et centraliser les réservations sur WhatsApp.</p>
+        <a class="btn-primary" style="margin-top:22px;" href="https://wa.me/242068942173" target="_blank" rel="noopener">En discuter sur WhatsApp</a>
+      </div>
+      <div class="contact-ph">
+        <span class="lbl">Gérante</span>
+        <span class="num">Tantine Rosalie Mbemba</span>
+        <span class="lbl" style="margin-top:10px;">Zone</span>
+        <span style="font-size:0.92rem;">Moungali, Brazzaville</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="disclaimer">
+      Maquette de démonstration réalisée par <strong>Kongo Nancy Emmanuel</strong>, à titre d'exemple pour un restaurant. Il ne s'agit pas d'un établissement en activité : nom, plats, tarifs et coordonnées sont fictifs.
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  (function () {
+    var btn = document.getElementById('theme-toggle');
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+      var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      if (isDark) {
+        document.documentElement.removeAttribute('data-theme');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+      try { localStorage.setItem('tt-theme', isDark ? 'light' : 'dark'); } catch (e) {}
+    });
+  })();
+</script>
+
+</body>
+</html>
