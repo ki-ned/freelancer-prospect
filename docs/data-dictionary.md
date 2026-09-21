@@ -74,6 +74,21 @@ Barème illustratif : 40 000 XAF/nuit (Standard), 65 000 XAF/nuit (Confort) — 
 
 **Note QA** : contrairement aux deux pilotes précédents, cet écran n'a pas pu être vérifié visuellement — `agent-browser` était bloqué par une stratégie de contrôle d'application Windows (Smart App Control ou AppLocker/WDAC) sur la machine d'Emmanuel. Relecture statique poussée faite à la place (tokens de thème clair/sombre, classes CSS/HTML, cohérence des montants, points de rupture mobile déjà validés sur les pilotes précédents réappliqués à l'identique) mais pas de capture d'écran réelle. À revérifier visuellement dès que le blocage est levé.
 
+#### gestion-comptable (Phase 2 — livré le 2026-09-21)
+
+Pilote "Cabinet Malonga & Associés" (cabinet comptable fictif, Brazzaville), 3 écrans (`index.html` tableau de bord, `factures.html`, `facture-detail.html`), données codées en dur en JS/HTML dans chaque page :
+
+```text
+factures: numero, client, date_emission, date_echeance, montant_ht, tva, montant_ttc, statut
+  numero au format FA-AAAA-NNNN (numérotation séquentielle SYSCOHADA)
+  statut ∈ { payee, attente, retard }
+
+depenses: poste, montant
+  poste ∈ { loyer, salaires, charges_diverses }
+```
+
+TVA à 18 % (taux standard Congo/zone OHADA, voir `docs/research/2026-09-21-accounting-dashboard-ui-conventions.md`), présentation HT/TVA/TTC systématique. La facture détaillée (`facture-detail.html`, exemple FA-2026-0014) affiche le NIU et le RCCM fictifs du cabinet en en-tête, conformément à l'obligation légale SYSCOHADA — seule cette facture a un détail de prestations HT/TVA construit, les 6 autres de `factures.html` n'ont qu'un statut et un montant.
+
 #### Autres prototypes (Phase 2/3 — pas encore construits)
 
-Sections à ajouter au moment de la construction de chacun : `gestion-comptable`, `gestion-restaurant`, `agence-livraison`, `noki-clone`.
+Sections à ajouter au moment de la construction de chacun : `gestion-restaurant`, `agence-livraison`, `noki-clone`.
