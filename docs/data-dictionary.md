@@ -72,7 +72,7 @@ reservations: id, client, contact, chambre, date_arrivee, date_depart, tarif_nui
 
 Barème illustratif : 40 000 XAF/nuit (Standard), 65 000 XAF/nuit (Confort) — ancré sur une grille tarifaire réelle d'hôtels indépendants à Brazzaville citée dans `docs/research/2026-09-21-hotel-pms-ui-conventions.md`. Statuts de chambre à 4 états (convention simplifiée inspirée de KiboERP, un PMS africain, plutôt que le vocabulaire plus riche d'Opera/Mews). Seule Pauline Ngouabi (chambre 204) a une fiche `reservations` complète construite.
 
-**Note QA** : contrairement aux deux pilotes précédents, cet écran n'a pas pu être vérifié visuellement — `agent-browser` était bloqué par une stratégie de contrôle d'application Windows (Smart App Control ou AppLocker/WDAC) sur la machine d'Emmanuel. Relecture statique poussée faite à la place (tokens de thème clair/sombre, classes CSS/HTML, cohérence des montants, points de rupture mobile déjà validés sur les pilotes précédents réappliqués à l'identique) mais pas de capture d'écran réelle. À revérifier visuellement dès que le blocage est levé.
+**Note QA** : livré initialement avec une relecture statique seulement (`agent-browser` bloqué par une stratégie de contrôle d'application Windows). QA visuelle réelle faite le 2026-09-21 via un script Playwright ad hoc contre les pages GitHub Pages en ligne (contournement du blocage, voir `current_state.md`) — aucun bug trouvé, écran confirmé.
 
 #### gestion-comptable (Phase 2 — livré le 2026-09-21)
 
