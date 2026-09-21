@@ -89,6 +89,21 @@ depenses: poste, montant
 
 TVA à 18 % (taux standard Congo/zone OHADA, voir `docs/research/2026-09-21-accounting-dashboard-ui-conventions.md`), présentation HT/TVA/TTC systématique. La facture détaillée (`facture-detail.html`, exemple FA-2026-0014) affiche le NIU et le RCCM fictifs du cabinet en en-tête, conformément à l'obligation légale SYSCOHADA — seule cette facture a un détail de prestations HT/TVA construit, les 6 autres de `factures.html` n'ont qu'un statut et un montant.
 
+#### gestion-restaurant (Phase 2 — livré le 2026-09-21)
+
+Pilote "Le Mbongui" (restaurant fictif distinct de Chez Tantine/restaurant-vitrine, Brazzaville), 3 écrans (`index.html` tableau de bord, `salle.html`, `stock.html`), données codées en dur en JS/HTML dans chaque page :
+
+```text
+tables: numero, couverts, statut
+  statut ∈ { libre, cuisine, pret, servi }
+
+ingredients: nom, stock_actuel, unite, seuil, fournisseur, statut
+  unite ∈ { kg, L, unites }
+  statut ∈ { ok, bas, rupture }
+```
+
+Statuts de table à 4 états, convention couleur inspirée de Lightspeed (voir `docs/research/2026-09-21-restaurant-back-office-ui-conventions.md`) : libre = neutre/pas de couleur, en cuisine = vert, prêt = ambre, servi = gris neutre. Liste d'ingrédients cohérente avec la carte de `templates/restaurant-vitrine/` (tilapia, poulet, feuilles de manioc, piment pili-pili...) sans reprendre le même établissement fictif. Le tableau de bord (`index.html`) et `salle.html`/`stock.html` sont numériquement cohérents entre eux (5 commandes en cours, 4 alertes stock, mêmes tables et ingrédients cités des deux côtés).
+
 #### Autres prototypes (Phase 2/3 — pas encore construits)
 
-Sections à ajouter au moment de la construction de chacun : `gestion-restaurant`, `agence-livraison`, `noki-clone`.
+Sections à ajouter au moment de la construction de chacun : `agence-livraison`, `noki-clone`.
