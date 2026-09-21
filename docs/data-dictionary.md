@@ -118,6 +118,26 @@ livreurs: nom, contact, vehicule, zone, statut
 
 Tarifs par zone (1 000 / 2 000 / 3 000 XAF selon centre-ville/périphérie proche/éloignée) et modèle de statut livreur à 3 états ancrés sur la recherche (Onfleet, OptimoRoute, et le contexte local Brazzaville). Seule Rachel Nzaba a une fiche `livreur.html` complète construite.
 
-#### Autres prototypes (Phase 3 — pas encore construits)
+#### noki-clone (Phase 3 — livré le 2026-09-21)
 
-`noki-clone`, dernier contexte prévu (voir `docs/feature-backlog.md`) — le plus ambitieux, plusieurs modules interconnectés.
+Pilote "Elonga" (boutique en ligne généraliste fictive, mode/électronique/maison, paiement à la livraison), inspiration fonctionnelle sur noki-services.com/fr (aucune reprise visuelle). 5 écrans (`index.html` tableau de bord, `commandes.html`, `stock.html`, `dispatch.html` livraison, `reconciliation.html`), données codées en dur en JS/HTML :
+
+```text
+commandes: id, client, articles, mode_paiement, montant, statut
+  mode_paiement ∈ { mobile_money, especes }
+  statut ∈ { confirmee, expediee, livree, echouee }
+
+produits: nom, categorie, prix, stock_disponible, stock_reserve, statut
+  categorie ∈ { electronique, mode, maison }
+  statut ∈ { ok, bas, rupture }
+
+missions: id, commande_id, livreur, zone, montant_a_encaisser, statut
+  statut ∈ { encours, terminee }
+
+reconciliation: livreur, montant_collecte, montant_reverse, ecart, statut
+  statut ∈ { solde, a_reverser }
+```
+
+Vocabulaire des statuts et modules (Commande & confirmation, Stock & préparation, Livraison & dispatch, COD & reversements) directement issu de la recherche sur noki-services.com/fr (voir `docs/research/2026-09-21-ecommerce-cod-dispatch-ui-conventions.md`) — la distinction stock disponible/réservé et le suivi séparé de l'encaissement (à la livraison) vs. du reversement (à la boutique) sont des mécaniques réelles du paiement à la livraison, pas des inventions. Les 3 montants clés (cash chez les livreurs au tableau de bord, montant à encaisser en livraison, écart en réconciliation) sont numériquement cohérents entre les 3 écrans concernés.
+
+C'est le dernier des 8 templates génériques planifiés — l'initiative "templates génériques" est maintenant complète.

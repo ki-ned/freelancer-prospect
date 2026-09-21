@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<title>Stock — Elonga</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<script>
+  try {
+    if (localStorage.getItem('nk-theme') === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+  } catch (e) {}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Mulish:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1530;
+    --ink-soft: rgba(26,21,48,0.6);
+    --paper: #f6f4fa;
+    --paper-raised: #ffffff;
+    --line: rgba(26,21,48,0.12);
+    --magenta: #d6266f;
+    --magenta-deep: #a81a56;
+    --magenta-tint: #fbe1ec;
+    --amber: #c9962f;
+    --amber-tint: #f7ecd2;
+    --good: #2f7a4f;
+    --good-tint: #e3f3e8;
+    --alert: #b3261e;
+    --alert-tint: #f8e0dd;
+  }
+  :root[data-theme="dark"] {
+    --ink: #f2eef8;
+    --ink-soft: rgba(242,238,248,0.62);
+    --paper: #14101f;
+    --paper-raised: #1e1830;
+    --line: rgba(242,238,248,0.12);
+    --magenta: #f0568f;
+    --magenta-deep: #f584ac;
+    --magenta-tint: #3a1826;
+    --amber: #e0b75c;
+    --amber-tint: #362a13;
+    --good: #5cb586;
+    --good-tint: #16301f;
+    --alert: #e2857d;
+    --alert-tint: #3a1e1a;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Mulish", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 { font-family: "Outfit", system-ui, sans-serif; font-weight: 600; margin: 0; letter-spacing: -0.01em; }
+  a { color: inherit; }
+  button { font-family: inherit; }
+  ::selection { background: var(--magenta); color: #fff; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--magenta-deep); outline-offset: 2px; border-radius: 4px; }
+  .tabular { font-variant-numeric: tabular-nums; }
+
+  /* ---- shell ---- */
+  .shell { display: flex; min-height: 100vh; }
+  .sidebar {
+    width: 232px; flex-shrink: 0; background: var(--paper-raised); border-right: 1px solid var(--line);
+    display: flex; flex-direction: column; padding: 20px 14px; position: sticky; top: 0; height: 100vh;
+  }
+  .sidebar-brand { display: flex; align-items: center; gap: 10px; padding: 6px 8px 22px; }
+  .sidebar-brand .mark { width: 32px; height: 32px; border-radius: 9px; background: var(--magenta); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .sidebar-brand .mark svg { width: 17px; height: 17px; }
+  .sidebar-brand .name { font-family: "Outfit", sans-serif; font-weight: 600; font-size: 0.95rem; line-height: 1.25; }
+  .sidebar-brand .tag { font-size: 0.72rem; color: var(--ink-soft); }
+  .sidebar-nav { display: flex; flex-direction: column; gap: 2px; }
+  .sidebar-nav a {
+    display: flex; align-items: center; gap: 11px; padding: 10px 12px; border-radius: 9px;
+    font-size: 0.86rem; font-weight: 500; text-decoration: none; color: var(--ink-soft);
+    transition: background .15s ease, color .15s ease;
+  }
+  .sidebar-nav a svg { width: 17px; height: 17px; flex-shrink: 0; }
+  .sidebar-nav a[aria-current="page"] { background: var(--magenta-tint); color: var(--magenta-deep); font-weight: 600; }
+  @media (hover: hover) and (pointer: fine) {
+    .sidebar-nav a:not([aria-current="page"]):hover { background: rgba(127,127,127,0.08); color: var(--ink); }
+  }
+  .sidebar-foot { margin-top: auto; display: flex; align-items: center; justify-content: space-between; padding: 10px 8px 4px; }
+  .demo-tag { font-size: 0.7rem; font-weight: 600; color: var(--ink-soft); border: 1px dashed var(--line); border-radius: 999px; padding: 4px 10px; }
+  .theme-toggle {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+    border: 1px solid var(--line); background: transparent; color: var(--ink); cursor: pointer;
+    transition: border-color .15s ease, background .15s ease;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .theme-toggle:hover { border-color: var(--ink-soft); background: rgba(127,127,127,0.1); }
+  }
+  .theme-toggle svg { width: 15px; height: 15px; }
+  .theme-toggle .icon-sun { display: none; }
+  :root[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+  :root[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+
+  .main { flex: 1; min-width: 0; padding: 26px 30px 40px; }
+  .page-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 22px; flex-wrap: wrap; }
+  .page-head h1 { font-size: 1.5rem; }
+  .page-head .sub { font-size: 0.86rem; color: var(--ink-soft); margin-top: 4px; }
+
+  /* ---- table ---- */
+  .table-card { background: var(--paper-raised); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+  table { width: 100%; border-collapse: collapse; }
+  thead th {
+    text-align: left; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-soft);
+    font-weight: 600; padding: 13px 18px; border-bottom: 1px solid var(--line);
+  }
+  thead th.num, tbody td.num { text-align: right; }
+  tbody td { padding: 13px 18px; border-bottom: 1px solid var(--line); font-size: 0.9rem; }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody td .cat { color: var(--ink-soft); font-size: 0.82rem; }
+  .pill {
+    display: inline-flex; align-items: center; gap: 6px; font-size: 0.76rem; font-weight: 600;
+    padding: 4px 10px; border-radius: 999px;
+  }
+  .pill .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+  .pill.ok { background: var(--good-tint); color: var(--good); }
+  .pill.bas { background: var(--amber-tint); color: var(--amber); }
+  .pill.rupture { background: var(--alert-tint); color: var(--alert); }
+  .table-foot { display: flex; justify-content: flex-end; padding: 14px 18px; border-top: 1px solid var(--line); font-size: 0.82rem; color: var(--ink-soft); }
+
+  footer { padding: 20px 4px 4px; }
+  footer .disclaimer {
+    font-size: 0.76rem; color: var(--ink-soft); line-height: 1.55;
+    border: 1px dashed var(--line); border-radius: 12px; padding: 12px 16px;
+  }
+
+  @media (max-width: 720px) {
+    .shell { flex-direction: column; }
+    .sidebar { width: 100%; height: auto; position: static; flex-direction: row; align-items: center; padding: 8px 10px; gap: 6px; }
+    .sidebar-brand { padding: 2px 4px 2px 0; flex-shrink: 0; }
+    .sidebar-brand .tag { display: none; }
+    .sidebar-nav { flex-direction: row; gap: 2px; flex: 1; justify-content: space-around; }
+    .sidebar-nav a { padding: 9px; border-radius: 10px; }
+    .sidebar-nav a .label { display: none; }
+    .sidebar-nav a svg { width: 19px; height: 19px; }
+    .sidebar-foot { margin-top: 0; margin-left: 6px; flex-shrink: 0; gap: 6px; }
+    .demo-tag { display: none; }
+    .main { padding: 20px 16px 32px; }
+    .table-card { overflow-x: auto; }
+    table { min-width: 680px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <span class="mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+      </span>
+      <div>
+        <div class="name">Elonga</div>
+        <div class="tag">Espace marchand</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="index.html" aria-label="Tableau de bord">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="9" rx="1.5"/><rect x="13" y="3" width="8" height="5" rx="1.5"/><rect x="13" y="12" width="8" height="9" rx="1.5"/><rect x="3" y="16" width="8" height="5" rx="1.5"/></svg>
+        <span class="label">Tableau de bord</span>
+      </a>
+      <a href="commandes.html" aria-label="Commandes">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+        <span class="label">Commandes</span>
+      </a>
+      <a href="stock.html" aria-current="page" aria-label="Stock">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/><path d="M12 11v10"/></svg>
+        <span class="label">Stock</span>
+      </a>
+      <a href="dispatch.html" aria-label="Livraison">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="2"/><circle cx="17" cy="19" r="2"/><path d="M3 5h2l1.6 9.6A2 2 0 0 0 8.6 16H17a2 2 0 0 0 2-1.6L20.4 7H6"/></svg>
+        <span class="label">Livraison</span>
+      </a>
+      <a href="reconciliation.html" aria-label="Réconciliation">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M6 7l-3 5a3 3 0 0 0 6 0zM21 7l-3 5a3 3 0 0 0 6 0zM4 7h16M9 3h6"/></svg>
+        <span class="label">Réconciliation</span>
+      </a>
+    </nav>
+    <div class="sidebar-foot">
+      <span class="demo-tag">Démo</span>
+      <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Basculer le mode sombre">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2.5M12 19v2.5M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M2.5 12H5M19 12h2.5M4.6 19.4l1.8-1.8M17.6 6.4l1.8-1.8"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg>
+      </button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="page-head">
+      <div>
+        <h1>Stock</h1>
+        <div class="sub">8 produits suivis, 4 alertes</div>
+      </div>
+    </div>
+
+    <div class="table-card">
+      <table>
+        <thead>
+          <tr>
+            <th>Produit</th>
+            <th>Catégorie</th>
+            <th class="num">Prix</th>
+            <th class="num">Disponible</th>
+            <th class="num">Réservé</th>
+            <th>Statut</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Écouteurs Bluetooth X200</td><td class="cat">Électronique</td><td class="num tabular">15 000 XAF</td><td class="num tabular">21</td><td class="num tabular">3</td><td><span class="pill ok"><span class="dot"></span>OK</span></td></tr>
+          <tr><td>Robe wax imprimée</td><td class="cat">Mode</td><td class="num tabular">18 000 XAF</td><td class="num tabular">10</td><td class="num tabular">2</td><td><span class="pill ok"><span class="dot"></span>OK</span></td></tr>
+          <tr><td>Chargeur solaire portable</td><td class="cat">Électronique</td><td class="num tabular">12 000 XAF</td><td class="num tabular">4</td><td class="num tabular">1</td><td><span class="pill bas"><span class="dot"></span>Bas</span></td></tr>
+          <tr><td>Sac à main similicuir</td><td class="cat">Mode</td><td class="num tabular">9 500 XAF</td><td class="num tabular">26</td><td class="num tabular">4</td><td><span class="pill ok"><span class="dot"></span>OK</span></td></tr>
+          <tr><td>Mixeur électrique</td><td class="cat">Maison</td><td class="num tabular">22 000 XAF</td><td class="num tabular">6</td><td class="num tabular">2</td><td><span class="pill bas"><span class="dot"></span>Bas</span></td></tr>
+          <tr><td>Montre connectée Lite</td><td class="cat">Électronique</td><td class="num tabular">28 000 XAF</td><td class="num tabular">2</td><td class="num tabular">1</td><td><span class="pill bas"><span class="dot"></span>Bas</span></td></tr>
+          <tr><td>Set de casseroles (3 pièces)</td><td class="cat">Maison</td><td class="num tabular">25 000 XAF</td><td class="num tabular">0</td><td class="num tabular">0</td><td><span class="pill rupture"><span class="dot"></span>Rupture</span></td></tr>
+          <tr><td>Baskets sport unisexe</td><td class="cat">Mode</td><td class="num tabular">16 500 XAF</td><td class="num tabular">15</td><td class="num tabular">3</td><td><span class="pill ok"><span class="dot"></span>OK</span></td></tr>
+        </tbody>
+      </table>
+      <div class="table-foot">4 OK · 3 bas · 1 rupture</div>
+    </div>
+    <p style="font-size:0.76rem; color:var(--ink-soft); margin-top:16px;">Le stock réservé correspond aux commandes confirmées ou expédiées, pour éviter la survente pendant la préparation.</p>
+
+    <footer>
+      <div class="disclaimer">
+        Maquette de démonstration réalisée par <strong>Kongo Nancy Emmanuel</strong>, à titre d'exemple pour une boutique en ligne. Il ne s'agit pas d'un système en production : commandes, stock et montants sont fictifs. Inspiration fonctionnelle uniquement — aucune reprise visuelle d'un service existant.
+      </div>
+    </footer>
+  </main>
+</div>
+
+<script>
+  (function () {
+    var btn = document.getElementById('theme-toggle');
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+      var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      if (isDark) {
+        document.documentElement.removeAttribute('data-theme');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+      try { localStorage.setItem('nk-theme', isDark ? 'light' : 'dark'); } catch (e) {}
+    });
+  })();
+</script>
+
+</body>
+</html>
