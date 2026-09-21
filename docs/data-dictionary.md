@@ -104,6 +104,20 @@ ingredients: nom, stock_actuel, unite, seuil, fournisseur, statut
 
 Statuts de table à 4 états, convention couleur inspirée de Lightspeed (voir `docs/research/2026-09-21-restaurant-back-office-ui-conventions.md`) : libre = neutre/pas de couleur, en cuisine = vert, prêt = ambre, servi = gris neutre. Liste d'ingrédients cohérente avec la carte de `templates/restaurant-vitrine/` (tilapia, poulet, feuilles de manioc, piment pili-pili...) sans reprendre le même établissement fictif. Le tableau de bord (`index.html`) et `salle.html`/`stock.html` sont numériquement cohérents entre eux (5 commandes en cours, 4 alertes stock, mêmes tables et ingrédients cités des deux côtés).
 
-#### Autres prototypes (Phase 2/3 — pas encore construits)
+#### agence-livraison (Phase 2 — livré le 2026-09-21)
 
-Sections à ajouter au moment de la construction de chacun : `agence-livraison`, `noki-clone`.
+Pilote "Éclair Coursiers" (agence de coursiers moto fictive, Brazzaville — nom choisi pour ne pas entrer en collision avec le futur `templates/noki-clone` : "Noki" est le nom d'un vrai service de coursiers à Brazzaville, cité dans `docs/research/2026-09-21-delivery-dispatch-ui-conventions.md`). 3 écrans (`index.html` tableau de bord, `courses.html`, `livreur.html`), données codées en dur en JS/HTML :
+
+```text
+courses: id, client, retrait, livraison, livreur, montant, statut
+  statut ∈ { attente, encours, livree, echouee }
+
+livreurs: nom, contact, vehicule, zone, statut
+  statut ∈ { encours, disponible, hors_service }
+```
+
+Tarifs par zone (1 000 / 2 000 / 3 000 XAF selon centre-ville/périphérie proche/éloignée) et modèle de statut livreur à 3 états ancrés sur la recherche (Onfleet, OptimoRoute, et le contexte local Brazzaville). Seule Rachel Nzaba a une fiche `livreur.html` complète construite.
+
+#### Autres prototypes (Phase 3 — pas encore construits)
+
+`noki-clone`, dernier contexte prévu (voir `docs/feature-backlog.md`) — le plus ambitieux, plusieurs modules interconnectés.
