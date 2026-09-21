@@ -58,6 +58,22 @@ frais: id, eleve_id, poste, montant_du, montant_paye, statut, date_echeance
 
 Barème illustratif : inscription 35 000 XAF (unique) + scolarité 100 000 XAF/trimestre × 3 (année scolaire en 3 trimestres, Oct–Juil, convention confirmée par `docs/research/2026-09-20-school-management-ui-conventions.md`). La liste `eleves.html` affiche 10 élèves à titre d'exemple sur les 187 comptés au tableau de bord ; seule Grâce Loubaki (statut `en_retard`) a une fiche `frais` complète construite (`fiche-eleve.html`), les autres statuts de la liste sont illustratifs sans détail de paiement sous-jacent.
 
+#### gestion-auberge (Phase 2 — livré le 2026-09-21)
+
+Pilote "Auberge du Fleuve" (auberge indépendante fictive, 12 chambres, Brazzaville), 3 écrans (`index.html` tableau de bord, `chambres.html` plan des chambres, `reservation.html`), données codées en dur en JS/HTML dans chaque page :
+
+```text
+chambres: numero, type, statut
+  type ∈ { standard, confort }
+  statut ∈ { libre, occupee, a_nettoyer, hors_service }
+
+reservations: id, client, contact, chambre, date_arrivee, date_depart, tarif_nuit, acompte, mode_paiement_acompte
+```
+
+Barème illustratif : 40 000 XAF/nuit (Standard), 65 000 XAF/nuit (Confort) — ancré sur une grille tarifaire réelle d'hôtels indépendants à Brazzaville citée dans `docs/research/2026-09-21-hotel-pms-ui-conventions.md`. Statuts de chambre à 4 états (convention simplifiée inspirée de KiboERP, un PMS africain, plutôt que le vocabulaire plus riche d'Opera/Mews). Seule Pauline Ngouabi (chambre 204) a une fiche `reservations` complète construite.
+
+**Note QA** : contrairement aux deux pilotes précédents, cet écran n'a pas pu être vérifié visuellement — `agent-browser` était bloqué par une stratégie de contrôle d'application Windows (Smart App Control ou AppLocker/WDAC) sur la machine d'Emmanuel. Relecture statique poussée faite à la place (tokens de thème clair/sombre, classes CSS/HTML, cohérence des montants, points de rupture mobile déjà validés sur les pilotes précédents réappliqués à l'identique) mais pas de capture d'écran réelle. À revérifier visuellement dès que le blocage est levé.
+
 #### Autres prototypes (Phase 2/3 — pas encore construits)
 
-Sections à ajouter au moment de la construction de chacun : `gestion-auberge`, `gestion-comptable`, `gestion-restaurant`, `agence-livraison`, `noki-clone`.
+Sections à ajouter au moment de la construction de chacun : `gestion-comptable`, `gestion-restaurant`, `agence-livraison`, `noki-clone`.
